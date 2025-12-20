@@ -7,9 +7,9 @@ window.renderPagination = function({ containerId, currentPage, perPage, totalDat
 
     // Base style tombol
     const baseBtn = 'px-3 py-1 text-sm rounded-md transition ';
-    const lightBtn = 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300';
+    const lightBtn = 'bg-white text-gray-700 hover:bg-gray-200 border border-gray-300';
     const darkBtn = 'dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:border-gray-700';
-    const activeBtn = 'bg-indigo-600 text-gray-700 shadow dark:bg-indigo-500';
+    const activeBtn = 'bg-indigo-500 text-white shadow dark:bg-indigo-500';
     const disabledBtn = 'text-gray-400 cursor-not-allowed dark:text-gray-600';
 
     // Fungsi buat tombol
