@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -44,7 +45,109 @@ Route::prefix('daftar')->group(function () {
 });
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
+
+// Master routes (temporary stubs)
+Route::prefix('master')->group(function () {
+
+    // Users
+    Route::get('/users', function () {
+        return view('master.users.index');
+    })->name('master.users.index');
+
+    Route::get('/users/create', function () {
+        return view('master.users.create');
+    })->name('master.users.create');
+
+    Route::post('/users', function () {
+        return redirect()->route('master.users.index');
+    })->name('master.users.store');
+
+    Route::get('/users/{id}/edit', function ($id) {
+        return view('master.users.edit');
+    })->name('master.users.edit');
+
+    Route::patch('/users/{id}', function ($id) {
+        return redirect()->route('master.users.index')->with('success', '(stub) User updated: ' . $id);
+    })->name('master.users.update');
+
+    Route::delete('/users/{id}', function ($id) {
+        return redirect()->route('master.users.index')->with('success', '(stub) User deleted: ' . $id);
+    })->name('master.users.destroy');
+
+    // Tokos
+    Route::get('/tokos', function () {
+        return view('master.tokos.index');
+    })->name('master.toko.index');
+
+    Route::get('/tokos/create', function () {
+        return view('master.tokos.create');
+    })->name('master.toko.create');
+
+    Route::post('/tokos', function () {
+        return redirect()->route('master.toko.index')->with('success', '(stub) Toko created.');
+    })->name('master.toko.store');
+
+    Route::get('/tokos/{id}/edit', function ($id) {
+        return view('master.tokos.edit');
+    })->name('master.toko.edit');
+
+    Route::patch('/tokos/{id}', function ($id) {
+        return redirect()->route('master.toko.index')->with('success', '(stub) Toko updated: ' . $id);
+    })->name('master.toko.update');
+
+    Route::delete('/tokos/{id}', function ($id) {
+        return redirect()->route('master.toko.index')->with('success', '(stub) Toko deleted: ' . $id);
+    })->name('master.toko.destroy');
+    // Kategori 
+    Route::get('/kategori', function () {
+        return view('master.kategori.index');
+    })->name('master.kategori.index');
+
+    Route::get('/kategori/create', function () {
+        return view('master.kategori.create');
+    })->name('master.kategori.create');
+
+    Route::post('/kategori', function () {
+        return redirect()->route('master.kategori.index')->with('success', '(stub) Kategori created.');
+    })->name('master.kategori.store');
+
+    Route::get('/kategori/{id}/edit', function ($id) {
+        return view('master.kategori.edit');
+    })->name('master.kategori.edit');
+
+    Route::patch('/kategori/{id}', function ($id) {
+        return redirect()->route('master.kategori.index')->with('success', '(stub) Kategori updated: ' . $id);
+    })->name('master.kategori.update');
+
+    Route::delete('/kategori/{id}', function ($id) {
+        return redirect()->route('master.kategori.index')->with('success', '(stub) Kategori deleted: ' . $id);
+    })->name('master.kategori.destroy');
+    // Vendor
+    Route::get('/vendor', function () {
+        return view('master.vendor.index');
+    })->name('master.vendor.index');
+
+    Route::get('/vendor/create', function () {
+        return view('master.vendor.create');
+    })->name('master.vendor.create');
+
+    Route::post('/vendor', function () {
+        return redirect()->route('master.vendor.index')->with('success', '(stub) Vendor created.');
+    })->name('master.vendor.store');
+
+    Route::get('/vendor/{id}/edit', function ($id) {
+        return view('master.vendor.edit');
+    })->name('master.vendor.edit');
+
+    Route::patch('/vendor/{id}', function ($id) {
+        return redirect()->route('master.vendor.index')->with('success', '(stub) Vendor updated: ' . $id);
+    })->name('master.vendor.update');
+
+    Route::delete('/vendor/{id}', function ($id) {
+        return redirect()->route('master.vendor.index')->with('success', '(stub) Vendor deleted: ' . $id);
+    })->name('master.vendor.destroy');
+});
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -55,4 +158,3 @@ require __DIR__.'/auth.php';
 //     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
-

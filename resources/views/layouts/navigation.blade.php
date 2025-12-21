@@ -76,11 +76,11 @@
         <div>
             <x-nav.dropdown label="Master"
                 icon="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-                prefix="Master.*" :items="[
-                    ['label' => 'User', 'route' => '#'],
-                    ['label' => 'Divisi/Toko', 'route' => '#'],
-                    ['label' => 'Kategori', 'route' => '#'],
-                    ['label' => 'Vendor', 'route' => '#'],
+                prefix="master.*" :items="[
+                    ['label' => 'User', 'route' => 'master.users.index'],
+                    ['label' => 'Divisi/Toko', 'route' => 'master.toko.index'],
+                    ['label' => 'Kategori', 'route' => 'master.kategori.index'],
+                    ['label' => 'Vendor', 'route' => 'master.vendor.index'],
                 ]" />
         </div>
 
