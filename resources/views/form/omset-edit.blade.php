@@ -36,9 +36,9 @@
                        text-gray-800 dark:text-gray-200
                        text-lg p-2">
                     <option>Pilih Toko</option>
-                    <option>Toko A</option>
-                    <option>Toko B</option>
-                    <option>Toko C</option>
+                    <option selected>Planet Fashihion Bandung</option>
+                    <option>Planet Fashihion Jakarta</option>
+                    <option>Planet Fashihion Surabaya</option>
                 </select>
             </div>
 
@@ -53,7 +53,7 @@
                            bg-gray-100 dark:bg-gray-600
                            text-gray-700 dark:text-gray-200
                            p-2 text-lg text-center">
-                    <x-input-rp type="text" placeholder="Masukkan nominal" />
+                    <x-input-rp type="text" placeholder="Masukkan nominal" value="1.500.000"/>
                 </div>
             </div>
 

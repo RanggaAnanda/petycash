@@ -88,8 +88,8 @@
         <div>
             <x-nav.dropdown label="Laporan"
                 icon="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                prefix="Laporan.*" :items="[
-                    ['label' => 'Petty Cash', 'route' => 'laporan.petty-cash'],
+                prefix="Laporan." :items="[
+                    ['label' => 'Petty Cash', 'route' => 'laporan.petycash'],
                     ['label' => 'Omset', 'route' => 'laporan.omset'],
                 ]" />
         </div>
@@ -113,7 +113,7 @@
     <!-- Dropdown Menu -->
     <div id="profileDropdown"
          class="absolute bottom-full left-0 mb-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden hidden z-50">
-        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Profile</a>
+        <a href="{{ route('profile') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Profile</a>
         <a href="{{ route('login') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-red-400">Logout</a>
     </div>
 </div>
