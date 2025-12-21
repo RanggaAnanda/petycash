@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ExportController;
 
+// Rangga
 Route::get('/', function () {
     return view('auth/login');
 })->name('login');
@@ -31,6 +33,10 @@ Route::prefix('form')->group(function () {
     Route::get('edit/uang-keluar', function () {
         return view('form.uang-keluar-edit');
     })->name('form.edit.uang-keluar');
+
+    Route::get('edit/omset', function () {
+        return view('form.omset-edit');
+    })->name('form.edit.omset');
 });
 
 Route::prefix('daftar')->group(function () {
@@ -44,7 +50,22 @@ Route::prefix('daftar')->group(function () {
     })->name('daftar.pettycash');
 });
 
+Route::prefix('laporan')->group(function () {
+    Route::get('/omset', function () {
+        return view('laporan.omset');
+    })->name('laporan.omset');
 
+    Route::get('/pettycash', function () {
+        return view('laporan.petycash');
+    })->name('laporan.petycash');
+});
+
+Route::get('/profile', function () {
+    return view('profile.index');
+})->name('profile');
+
+
+// Zull
 require __DIR__ . '/auth.php';
 
 // Master routes (temporary stubs)
@@ -148,6 +169,10 @@ Route::prefix('master')->group(function () {
         return redirect()->route('master.vendor.index')->with('success', '(stub) Vendor deleted: ' . $id);
     })->name('master.vendor.destroy');
 });
+
+
+Route::get('/export/omset', [ExportController::class, 'exportOmset'])
+    ->name('export.omset');
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');

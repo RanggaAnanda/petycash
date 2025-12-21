@@ -8,6 +8,14 @@
 
         <form action="#" class="space-y-6">
 
+            <!-- Header -->
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100 ">
+                    Form Uang Masuk
+                </h2>
+                <hr class="mt-3 border-gray-200 dark:border-gray-700">
+            </div>
+
             <!-- Tanggal -->
             <div>
                 <x-input-label name="Tanggal" />
@@ -17,21 +25,10 @@
             <!-- Kategori -->
             <div>
                 <x-input-label name="Kategori" />
-                <x-dropdown
-                    name="kategori"
-                    :options="[
-                        'penjualan' => 'Penjualan',
-                        'pembayaran_piutang' => 'Pembayaran Piutang',
-                        'lainnya' => 'Lainnya',
-                    ]"
-                    placeholder="Pilih Kategori"
-                />
-            </div>
-
-            <!-- Keterangan -->
-            <div>
-                <x-input-label name="Keterangan" />
-                <x-input-text name="keterangan" placeholder="Masukan keterangan" />
+                <x-dropdown name="kategori" :options="[
+                    'transfer dari keuangan' => 'Tranfer dari keuangan',
+                    'lainnya' => 'Lainnya',
+                ]" placeholder="Pilih Kategori" />
             </div>
 
             <!-- Jumlah -->
@@ -41,6 +38,12 @@
                     <x-input-rp-label type="text" value="Rp" />
                     <x-input-rp type="text" placeholder="Masukkan nominal" />
                 </div>
+            </div>
+
+            <!-- Keterangan -->
+            <div class="mt-6">
+                <x-input-label name="Keterangan" />
+                <x-input-text name="keterangan" placeholder="Opsional" />
             </div>
 
             <!-- Save Button -->
