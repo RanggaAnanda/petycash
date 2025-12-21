@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Form Uang Masuk')
-@section('page-title', 'Form Uang Masuk')
+@section('title', 'Form Uang Keluar')
+@section('page-title', 'Form Uang Keluar')
 
 @section('content')
     <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow w-full">
@@ -17,21 +17,17 @@
             <!-- Kategori -->
             <div>
                 <x-input-label name="Kategori" />
-                <x-dropdown
-                    name="kategori"
-                    :options="[
-                        'penjualan' => 'Penjualan',
-                        'pembayaran_piutang' => 'Pembayaran Piutang',
-                        'lainnya' => 'Lainnya',
-                    ]"
-                    placeholder="Pilih Kategori"
-                />
+                <x-dropdown name="kategori" :options="[
+                    'atk' => 'Atk',
+                    'gaji karyawan' => 'Gaji Karyawan',
+                    'uang makan' => 'Uang Makan',
+                ]" placeholder="Pilih Kategori" />
             </div>
 
             <!-- Keterangan -->
             <div>
                 <x-input-label name="Keterangan" />
-                <x-input-text name="keterangan" placeholder="Masukan keterangan" />
+                <x-input-text name="keterangan" placeholder="Masukan keterangan" value="Pembelian Kertas" />
             </div>
 
             <!-- Jumlah -->
@@ -39,7 +35,7 @@
                 <x-input-label name="Jumlah" />
                 <div class="flex">
                     <x-input-rp-label type="text" value="Rp" />
-                    <x-input-rp type="text" placeholder="Masukkan nominal" />
+                    <x-input-rp type="text" placeholder="Masukkan nominal" value="50.000" />
                 </div>
             </div>
 

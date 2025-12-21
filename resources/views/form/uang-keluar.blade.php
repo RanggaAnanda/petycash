@@ -14,6 +14,20 @@
                 <x-input-date name="tanggal" readonly />
             </div>
 
+            <!-- Kategori -->
+            <div>
+            <x-input-label name="Kategori" />
+            <x-dropdown
+                name="kategori"
+                :options="[
+                    'atk' => 'Atk',
+                    'gaji karyawan' => 'Gaji Karyawan',
+                    'uang makan' => 'Uang Makan',
+                ]"
+                placeholder="Pilih Kategori"
+            />
+            </div>
+
             <!-- Keterangan -->
             <div>
                 <x-input-label name="Keterangan" />

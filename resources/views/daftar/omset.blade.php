@@ -18,7 +18,7 @@
                         'today' => 'Hari Ini',
                         'week' => '1 Minggu Terakhir',
                         'month' => '1 Bulan Terakhir',
-                    ]" placeholder="Pilih Kategori" />
+                    ]" />
                 </div>
 
                 <!-- Toko -->
@@ -29,7 +29,7 @@
                         'Toko A' => 'Toko A',
                         'Toko B' => 'Toko B',
                         'Toko C' => 'Toko C',
-                    ]" placeholder="Pilih Toko" />
+                    ]"  />
                 </div>
 
             </div>

@@ -23,6 +23,13 @@ Route::prefix('form')->group(function () {
         return view('form.omset');
     })->name('form.omset');
 
+    Route::get('edit/uang-masuk', function () {
+        return view('form.uang-masuk-edit');
+    })->name('form.edit.uang-masuk');
+
+    Route::get('edit/uang-keluar', function () {
+        return view('form.uang-keluar-edit');
+    })->name('form.edit.uang-keluar');
 });
 
 Route::prefix('daftar')->group(function () {

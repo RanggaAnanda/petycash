@@ -1,7 +1,6 @@
 @props([
     'name',
     'options' => [],
-    'placeholder' => 'Pilih',
     'value' => null
 ])
 
@@ -18,7 +17,7 @@
         '
     ]) }}
 >
-    <option value="">{{ $placeholder }}</option>
+    </option>
 
     @foreach ($options as $key => $label)
         <option

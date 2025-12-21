@@ -17,7 +17,7 @@
                     'today' => 'Hari Ini',
                     'week' => '1 Minggu Terakhir',
                     'month' => '1 Bulan Terakhir',
-                ]" placeholder="Pilih Kategori" />
+                ]" />
             </div>
 
             <div>
@@ -26,7 +26,7 @@
                     'all' => 'Semua',
                     'masuk' => 'Uang Masuk',
                     'keluar' => 'Uang Keluar',
-                ]" placeholder="Pilih Jenis Transaksi" />
+                ]" />
             </div>
 
             <div>
@@ -47,10 +47,9 @@
         <thead>
             <tr>
                 <x-th class="w-12 text-center">No</x-th>
-                <x-th>Tanggal</x-th>
+                <x-th class="w-14 text-center" colspan="2">Tanggal</x-th>
                 <x-th class="text-center">Toko</x-th>
-                <x-th class="text-center">Masuk</x-th>
-                <x-th class="text-center">Keluar</x-th>
+                <x-th class="text-center">transaksi</x-th>
                 <x-th class="text-center">Saldo</x-th>
             </tr>
         </thead>
@@ -72,8 +71,6 @@ let filteredData = [];
 // ===== DUMMY DATA =====
 const data = [];
 const tokoList = ['Toko A', 'Toko B', 'Toko C'];
-const nominalMasuk = [300000, 500000, 750000, 1000000];
-const nominalKeluar = [50000, 75000, 100000, 150000, 200000];
 let saldo = 2000000; // saldo awal
 
 for (let i = 0; i < 30; i++) {
@@ -81,15 +78,21 @@ for (let i = 0; i < 30; i++) {
     date.setDate(date.getDate() - i);
     const toko = tokoList[i % tokoList.length];
 
+    // TRANSAKSI POSITIF ATAU NEGATIF
     let masuk = 0;
     let keluar = 0;
-    if (i % 5 === 0) masuk = nominalMasuk[i % nominalMasuk.length];
-    else if (i % 2 === 0) keluar = nominalKeluar[i % nominalKeluar.length];
+
+    // Contoh transaksi acak
+    if (i % 6 === 0) masuk = 15000000; // hijau
+    else if (i % 4 === 0) keluar = 294000; // merah
+    else if (i % 5 === 0) masuk = 500000;
+    else if (i % 2 === 0) keluar = 100000;
 
     saldo = saldo + masuk - keluar;
 
     data.push({ tanggal: date, toko, masuk, keluar, saldo });
 }
+
 
 // ===== FILTER =====
 function applyFilter() {
@@ -128,15 +131,51 @@ function renderTable() {
     const pageData = filteredData.slice(start, start + perPage);
 
     pageData.forEach((row, index) => {
+        const rowId = `row-${start + index}`;
+
         tbody.innerHTML += `
-        <tr class="border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white transition">
-            <td class="p-3 text-center font-medium">${start + index + 1}</td>
-            <td class="p-3">${row.tanggal.toLocaleDateString('id-ID')}</td>
-            <td class="p-3 text-center">${row.toko}</td>
-            <td class="p-3 text-green-600 text-center">${row.masuk ? row.masuk.toLocaleString('id-ID') : '-'}</td>
-            <td class="p-3 text-red-600 text-center">${row.keluar ? row.keluar.toLocaleString('id-ID') : '-'}</td>
-            <td class="p-3 text-center font-semibold">${row.saldo.toLocaleString('id-ID')}</td>
-        </tr>`;
+            <tr class="border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white transition">
+                <td class="p-3 text-center font-medium">${start + index + 1}</td>
+                <td class="p-3 text-center font-medium">
+                    <button onclick="toggleDetail('${rowId}')" class="font-bold text-lg">+</button>
+                </td>
+                <td class="p-3">${row.tanggal.toLocaleDateString('id-ID')}</td>
+                <td class="p-3 text-center">${row.toko}</td>
+                <td class="p-3 text-center ${row.masuk ? 'text-green-600' : row.keluar ? 'text-red-600' : ''}">
+                    ${row.masuk ? '+' + row.masuk.toLocaleString('id-ID') : row.keluar ? '-' + row.keluar.toLocaleString('id-ID') : '-'}
+                </td>
+                <td class="p-3 text-center font-semibold">${row.saldo.toLocaleString('id-ID')}</td>
+            </tr>`;
+
+        tbody.innerHTML += `
+            <tr id="${rowId}" class="detail-row hidden border-b dark:border-gray-700 bg-gray-50 dark:bg-gray-800 transition">
+                <td></td>
+                <td colspan="5" class="p-3">
+                    <div class="space-y-1">
+                        <div><strong>Toko:</strong> ${row.toko}</div>
+                        <div><strong>Jenis Transaksi:</strong> ${row.masuk ? 'Uang Masuk' : row.keluar ? 'Uang Keluar' : 'Tidak ada transaksi'}</div>
+                        <div><strong>Jumlah Uang:</strong> 
+                            <span class="${row.masuk ? 'text-green-600' : row.keluar ? 'text-red-600' : ''}">
+                                ${row.masuk ? row.masuk.toLocaleString('id-ID') : row.keluar ? row.keluar.toLocaleString('id-ID') : '-'}
+                            </span>
+                        </div>
+                        <div><strong>Kategori:</strong> ${row.masuk || row.keluar ? 'Atk' : '-'}</div>
+                        <div><strong>Sisa Saldo:</strong> ${row.saldo.toLocaleString('id-ID')}</div>
+                        ${
+                            row.masuk 
+                            ? `<a href="{{ route('form.edit.uang-masuk') }}">
+                                    <button class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">Edit</button>
+                            </a>` 
+                            : row.keluar 
+                            ? `<a href="{{ route('form.edit.uang-keluar') }}">
+                                    <button class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">Edit</button>
+                            </a>` 
+                            : ''
+                        }
+                    </div>
+                </td>
+            </tr>`;
+
     });
 
     renderPagination({
@@ -154,6 +193,19 @@ window.changePage = function(page) {
     if (page < 1 || page > totalPages) return;
     currentPage = page;
     renderTable();
+}
+
+function toggleDetail(id) {
+    const detailRow = document.getElementById(id);
+    const btn = detailRow.previousElementSibling.querySelector('button');
+
+    if (detailRow.classList.contains('hidden')) {
+        detailRow.classList.remove('hidden');
+        btn.textContent = '-';
+    } else {
+        detailRow.classList.add('hidden');
+        btn.textContent = '+';
+    }
 }
 
 // ===== INIT =====
