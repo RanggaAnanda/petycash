@@ -47,7 +47,7 @@
         <thead>
             <tr>
                 <x-th class="w-12 text-center">No</x-th>
-                <x-th class="w-14 text-center" colspan="2">Tanggal</x-th>
+                <x-th class="w-10 text-center" colspan="2">Tanggal</x-th>
                 <x-th class="text-center">Toko</x-th>
                 <x-th class="text-center">transaksi</x-th>
                 <x-th class="text-center">Saldo</x-th>
