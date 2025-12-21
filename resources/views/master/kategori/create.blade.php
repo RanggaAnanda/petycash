@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="flex items-center gap-2">
-                    <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded">Simpan</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded">Simpan</button>
                     <a href="{{ route('master.kategori.index') }}" class="px-3 py-2 bg-gray-200 rounded">Batal</a>
                 </div>
             </form>

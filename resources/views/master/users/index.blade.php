@@ -21,131 +21,129 @@
 @section('content')
 <div class="space-y-6">
 
-    <!-- FILTER -->
+    <!-- CARD: LIST USERS HEADER + ACTIONS -->
     <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow border">
-        <div class="flex flex-wrap gap-4 items-end">
+        <div class="flex items-center justify-between">
+            <h3 class="font-semibold">LIST USERS</h3>
+            <a href="{{ route('master.users.create') }}" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded">Add Users</a>
+        </div>
 
-            <div>
-                <x-input-label name="Cari" />
-                <input id="filterSearch" type="text" class="px-3 py-2 rounded border w-64" placeholder="Cari nama, email, role..." />
+        <div class="flex items-center justify-between mt-4">
+            <div class="flex items-center gap-3">
+                <select id="perPageUsers" class="border rounded px-2 py-1">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                </select>
+                <span class="text-sm text-gray-500">entries per page</span>
             </div>
 
-            <div>
-                <x-input-label name="Toko" />
-                <x-dropdown name="filterToko" id="filterToko" :options="[
-                    'all' => 'Semua Toko',
-                    'Toko A' => 'Toko A',
-                    'Toko B' => 'Toko B',
-                    'Toko C' => 'Toko C',
-                ]" />
-            </div>
-
-            <div class="ml-auto">
-                <a href="{{ route('master.users.create') }}" class="px-4 py-2 bg-indigo-600 text-white rounded">Tambah User</a>
+            <div class="flex items-center gap-2">
+                <label class="text-sm">Search:</label>
+                <input id="filterSearch" type="text" class="px-3 py-2 rounded border" placeholder="Cari nama, email, role..." />
             </div>
         </div>
     </div>
 
     <!-- TABLE -->
-    <x-table>
-        <thead>
-            <tr>
-                <x-th class="w-12 text-center">No</x-th>
-                <x-th class="w-10 text-center">#</x-th>
-                <x-th class="text-left">Nama</x-th>
-                <x-th class="text-left">Email</x-th>
-                <x-th class="text-center">Role</x-th>
-                <x-th class="text-center">Toko</x-th>
-                <x-th class="text-center">Aksi</x-th>
-            </tr>
-        </thead>
-        <x-tbody id="tableBodyUsers" />
-    </x-table>
+    <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow border">
+        <x-table>
+            <thead>
+                <tr>
+                    <x-th class="w-12 text-center">No</x-th>
+                    <x-th class="text-left">NAMA</x-th>
+                    <x-th class="text-left">EMAIL</x-th>
+                    <x-th class="text-center">TOKO</x-th>
+                    <x-th class="text-center">ROLE</x-th>
+                    <x-th class="w-24 text-center">EDIT</x-th>
+                </tr>
+            </thead>
+            <x-tbody id="tableBodyUsers" />
+        </x-table>
 
-    <!-- PAGINATION -->
-    <div class="flex justify-center">
-        <div id="paginationUsers" class="flex items-center gap-1 bg-white dark:bg-gray-800 border rounded-lg p-1 shadow-sm"></div>
+        <div class="flex items-center justify-between mt-3">
+            <div id="infoUsers" class="text-sm text-gray-500">Showing 0 to 0 of 0 entries</div>
+            <div id="paginationUsers" class="flex items-center gap-1 bg-white dark:bg-gray-800 border rounded-lg p-1 shadow-sm"></div>
+        </div>
     </div>
 
 </div>
 
 <script src="{{ asset('js/helpers/pagination.js') }}"></script>
 <script>
-    const perPageUsers = 10;
-    let currentPageUsers = 1;
+    // pagination & filtering variables
+    let perPage = parseInt(document.getElementById('perPageUsers').value);
+    let currentPage = 1;
     let filteredUsers = [];
 
+    // sample/dummy data (replace with server-side data later)
     const usersData = [];
-    const tokoList = ['Toko A','Toko B','Toko C'];
-    const roles = ['admin','user','repot','superadmin'];
-    for (let i=1;i<=37;i++){
-        usersData.push({id:i, name:'User '+i, email:'user'+i+'@example.com', role: roles[i%roles.length], toko: tokoList[i%tokoList.length]});
+    const tokoList = ['PLANET FASHION KARANG GETAS CIREBON','PLANET FASHION PGC CIREBON','PLANET FASHION WERU CIREBON','PLANET FASHION KUNINGAN'];
+    const roles = ['user','superadmin'];
+    for (let i=1;i<=8;i++){
+        usersData.push({id:i, name:`Planetfashion ${i}`, email:`user${i}@planetfashion.id`, role: roles[i%roles.length], toko: tokoList[i%tokoList.length]});
     }
 
     const baseUrlUsers = '{{ url('/master/users') }}';
-    const csrfToken = '{{ csrf_token() }}';
 
-    function applyUsersFilter(){
-        const q = document.getElementById('filterSearch').value.trim().toLowerCase();
-        const toko = document.getElementById('filterToko').value;
+    // DOM refs
+    const perPageSelect = document.getElementById('perPageUsers');
+    const searchBox = document.getElementById('filterSearch');
+    const tbody = document.getElementById('tableBodyUsers');
+    const infoEl = document.getElementById('infoUsers');
 
-        filteredUsers = usersData.filter(row => {
-            if (toko !== 'all' && row.toko !== toko) return false;
-            if (q && !(row.name.toLowerCase().includes(q) || row.email.toLowerCase().includes(q) || row.role.toLowerCase().includes(q))) return false;
-            return true;
+    function applyFilter(){
+        const q = searchBox.value.trim().toLowerCase();
+        filteredUsers = usersData.filter(u => {
+            if (!q) return true;
+            return u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q) || u.role.toLowerCase().includes(q) || u.toko.toLowerCase().includes(q);
         });
-
-        currentPageUsers = 1; renderUsersTable();
+        currentPage = 1; renderTable();
     }
 
-    document.getElementById('filterSearch').addEventListener('input', applyUsersFilter);
-    document.getElementById('filterToko').addEventListener('change', applyUsersFilter);
+    perPageSelect.addEventListener('change', ()=>{ perPage = parseInt(perPageSelect.value); currentPage = 1; renderTable(); });
+    searchBox.addEventListener('input', applyFilter);
 
-    function renderUsersTable(){
-        const tbody = document.getElementById('tableBodyUsers'); tbody.innerHTML='';
-        const start = (currentPageUsers-1)*perPageUsers; const pageData = filteredUsers.slice(start, start+perPageUsers);
+    function renderTable(){
+        tbody.innerHTML = '';
+        const total = filteredUsers.length;
+        const start = (currentPage-1)*perPage;
+        const end = Math.min(start + perPage, total);
+        const pageData = filteredUsers.slice(start, end);
 
         pageData.forEach((row, idx)=>{
-            const rowId = 'u-'+row.id;
             tbody.innerHTML += `
             <tr class="border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
                 <td class="p-3 text-center font-medium">${start+idx+1}</td>
-                <td class="p-3 text-center"><button onclick="toggleUserDetail('${rowId}')" class="font-bold">+</button></td>
                 <td class="p-3">${row.name}</td>
                 <td class="p-3">${row.email}</td>
-                <td class="p-3 text-center">${row.role}</td>
                 <td class="p-3 text-center">${row.toko}</td>
-                <td class="p-3 text-center">
-                    <a href="${baseUrlUsers}/${row.id}/edit" class="inline-flex items-center px-3 py-1.5 border rounded text-sm text-white bg-yellow-500 hover:bg-yellow-600">Edit</a>
-                    <form action="${baseUrlUsers}/${row.id}" method="POST" class="inline-block ml-2" onsubmit="return confirm('Yakin ingin menghapus user ini?');">
-                        <input type="hidden" name="_token" value="${csrfToken}">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="inline-flex items-center px-3 py-1.5 border rounded text-sm text-white bg-red-600 hover:bg-red-700">Hapus</button>
-                    </form>
-                </td>
-            </tr>
-
-            <tr id="${rowId}" class="detail-row hidden bg-gray-50 dark:bg-gray-800">
-                <td></td>
-                <td colspan="6" class="p-3">
-                    <div class="space-y-1">
-                        <div><strong>Nama:</strong> ${row.name}</div>
-                        <div><strong>Email:</strong> ${row.email}</div>
-                        <div><strong>Role:</strong> ${row.role}</div>
-                        <div><strong>Toko:</strong> ${row.toko}</div>
-                    </div>
-                </td>
-            </tr>
-            `;
+                <td class="p-3 text-center">${row.role}</td>
+                <td class="p-3 text-center"><a href="${baseUrlUsers}/${row.id}/edit" class="text-blue-600">Edit</a></td>
+            </tr>`;
         });
 
-        renderPagination({containerId:'paginationUsers', currentPage: currentPageUsers, perPage: perPageUsers, totalData: filteredUsers.length, onChange: changeUsersPage});
+        // update info text
+        if (total === 0) {
+            infoEl.textContent = 'Showing 0 to 0 of 0 entries';
+        } else {
+            infoEl.textContent = `Showing ${start+1} to ${end} of ${total} entries`;
+        }
+
+        // render pagination
+        renderPagination({
+            containerId: 'paginationUsers',
+            currentPage: currentPage,
+            perPage: perPage,
+            totalData: total,
+            onChange: (p) => { changePage(p); }
+        });
     }
 
-    window.changeUsersPage = function(p){ const total = Math.ceil(filteredUsers.length / perPageUsers); if (p<1 || p>total) return; currentPageUsers = p; renderUsersTable(); }
+    function changePage(p){ const totalPages = Math.ceil(filteredUsers.length / perPage); if (p<1 || p>totalPages) return; currentPage = p; renderTable(); }
 
-    function toggleUserDetail(id){ const row = document.getElementById(id); const btn = row.previousElementSibling.querySelector('button'); if (row.classList.contains('hidden')){ row.classList.remove('hidden'); btn.textContent='-'; } else { row.classList.add('hidden'); btn.textContent='+'; } }
-
-    filteredUsers = usersData; renderUsersTable();
+    // init
+    filteredUsers = usersData;
+    renderTable();
 </script>
 @endsection

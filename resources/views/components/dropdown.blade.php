@@ -17,14 +17,16 @@
         '
     ]) }}
 >
-    </option>
-
     @foreach ($options as $key => $label)
         <option
             value="{{ $key }}"
             {{ old($name, $value) == $key ? 'selected' : '' }}
         >
-            {{ $label }}
+            @if(is_array($label) || is_object($label))
+                {{ json_encode($label) }}
+            @else
+                {{ $label }}
+            @endif
         </option>
     @endforeach
 </select>

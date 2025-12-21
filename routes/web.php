@@ -68,106 +68,51 @@ Route::get('/profile', function () {
 // Zull
 require __DIR__ . '/auth.php';
 
-// Master routes (temporary stubs)
-Route::prefix('master')->group(function () {
+// Master routes (temporary stubs) — simplified
+Route::prefix('master')->name('master.')->group(function () {
+    $resources = [
+        // uri => [viewPrefix, routeNameBase]
+        'users' => ['view' => 'master.users', 'name' => 'users'],
+        'tokos' => ['view' => 'master.tokos', 'name' => 'toko'], // keep "toko" singular in route names for backward compatibility
+        'kategori' => ['view' => 'master.kategori', 'name' => 'kategori'],
+        'vendor' => ['view' => 'master.vendor', 'name' => 'vendor'],
+    ];
 
-    // Users
-    Route::get('/users', function () {
-        return view('master.users.index');
-    })->name('master.users.index');
+    foreach ($resources as $uri => $info) {
+        $view = $info['view'];
+        $base = $info['name'];
 
-    Route::get('/users/create', function () {
-        return view('master.users.create');
-    })->name('master.users.create');
+        Route::get("/{$uri}", function () use ($view) {
+            return view("{$view}.index");
+        })->name("{$base}.index");
 
-    Route::post('/users', function () {
-        return redirect()->route('master.users.index');
-    })->name('master.users.store');
+        Route::get("/{$uri}/create", function () use ($view) {
+            return view("{$view}.create");
+        })->name("{$base}.create");
 
-    Route::get('/users/{id}/edit', function ($id) {
-        return view('master.users.edit');
-    })->name('master.users.edit');
+        Route::post("/{$uri}", function () use ($base) {
+            return redirect()->route("master.{$base}.index")->with('success', "(stub) " . ucfirst($base) . " created.");
+        })->name("{$base}.store");
 
-    Route::patch('/users/{id}', function ($id) {
-        return redirect()->route('master.users.index')->with('success', '(stub) User updated: ' . $id);
-    })->name('master.users.update');
+        Route::get("/{$uri}/{id}/edit", function ($id) use ($view) {
+            return view("{$view}.edit");
+        })->name("{$base}.edit");
 
-    Route::delete('/users/{id}', function ($id) {
-        return redirect()->route('master.users.index')->with('success', '(stub) User deleted: ' . $id);
-    })->name('master.users.destroy');
+        Route::patch("/{$uri}/{id}", function ($id) use ($base) {
+            return redirect()->route("master.{$base}.index")->with('success', "(stub) " . ucfirst($base) . " updated: " . $id);
+        })->name("{$base}.update");
 
-    // Tokos
-    Route::get('/tokos', function () {
-        return view('master.tokos.index');
-    })->name('master.toko.index');
+        Route::delete("/{$uri}/{id}", function ($id) use ($base) {
+            return redirect()->route("master.{$base}.index")->with('success', "(stub) " . ucfirst($base) . " deleted: " . $id);
+        })->name("{$base}.destroy");
+    }
 
-    Route::get('/tokos/create', function () {
-        return view('master.tokos.create');
-    })->name('master.toko.create');
-
-    Route::post('/tokos', function () {
-        return redirect()->route('master.toko.index')->with('success', '(stub) Toko created.');
-    })->name('master.toko.store');
-
-    Route::get('/tokos/{id}/edit', function ($id) {
-        return view('master.tokos.edit');
-    })->name('master.toko.edit');
-
-    Route::patch('/tokos/{id}', function ($id) {
-        return redirect()->route('master.toko.index')->with('success', '(stub) Toko updated: ' . $id);
-    })->name('master.toko.update');
-
-    Route::delete('/tokos/{id}', function ($id) {
-        return redirect()->route('master.toko.index')->with('success', '(stub) Toko deleted: ' . $id);
-    })->name('master.toko.destroy');
-    // Kategori 
-    Route::get('/kategori', function () {
-        return view('master.kategori.index');
-    })->name('master.kategori.index');
-
-    Route::get('/kategori/create', function () {
-        return view('master.kategori.create');
-    })->name('master.kategori.create');
-
-    Route::post('/kategori', function () {
-        return redirect()->route('master.kategori.index')->with('success', '(stub) Kategori created.');
-    })->name('master.kategori.store');
-
-    Route::get('/kategori/{id}/edit', function ($id) {
-        return view('master.kategori.edit');
-    })->name('master.kategori.edit');
-
-    Route::patch('/kategori/{id}', function ($id) {
-        return redirect()->route('master.kategori.index')->with('success', '(stub) Kategori updated: ' . $id);
-    })->name('master.kategori.update');
-
-    Route::delete('/kategori/{id}', function ($id) {
-        return redirect()->route('master.kategori.index')->with('success', '(stub) Kategori deleted: ' . $id);
-    })->name('master.kategori.destroy');
-    // Vendor
-    Route::get('/vendor', function () {
-        return view('master.vendor.index');
-    })->name('master.vendor.index');
-
-    Route::get('/vendor/create', function () {
-        return view('master.vendor.create');
-    })->name('master.vendor.create');
-
-    Route::post('/vendor', function () {
-        return redirect()->route('master.vendor.index')->with('success', '(stub) Vendor created.');
-    })->name('master.vendor.store');
-
-    Route::get('/vendor/{id}/edit', function ($id) {
-        return view('master.vendor.edit');
-    })->name('master.vendor.edit');
-
-    Route::patch('/vendor/{id}', function ($id) {
-        return redirect()->route('master.vendor.index')->with('success', '(stub) Vendor updated: ' . $id);
-    })->name('master.vendor.update');
-
-    Route::delete('/vendor/{id}', function ($id) {
-        return redirect()->route('master.vendor.index')->with('success', '(stub) Vendor deleted: ' . $id);
-    })->name('master.vendor.destroy');
+    // Subkategori route (show subkategori for a kategori)
+    Route::get('/kategori/{id}/subkategori', function ($id) {
+        // simple stub: pass kategori object to view; real implementation should use model
+        $kategori = (object)[ 'id' => $id, 'name' => "Kategori " . $id ];
+        return view('master.kategori.subkategori', compact('kategori'));
+    })->name('kategori.subkategori');
 });
 
 

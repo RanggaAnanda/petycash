@@ -5,10 +5,30 @@
     'readonly' => false,
     'placeholder' => ''
 ])
+
+@php
+    // normalize name: use provided name, fallback to attributes 'name' or 'id'
+    $name = $name ?? ($attributes->get('name') ?? $attributes->get('id') ?? null);
+
+    // Avoid passing null to old() which returns the whole old input array (causes htmlspecialchars error)
+    $rawOld = $name ? old($name, $value) : $value;
+
+    // Ensure value is a scalar string for the value attribute
+    if (is_array($rawOld) || is_object($rawOld)) {
+        // prefer the provided default scalar value, otherwise empty string
+        $inputValue = is_scalar($value) ? $value : '';
+    } else {
+        $inputValue = $rawOld;
+    }
+
+    $hasError = $name && isset($errors) && $errors->has($name);
+@endphp
+
 <input
     type="{{ $type }}"
-    value="{{ old($name, $value) }}"
-    readonly="{{ $readonly ? 'readonly' : '' }}"
+    @if($name) name="{{ $name }}" @endif
+    value="{{ $inputValue }}"
+    @if($readonly) readonly @endif
 
     {{ $attributes->merge([
         'class' => '
