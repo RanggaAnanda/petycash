@@ -47,145 +47,51 @@
     <!-- Menu - Tambah overflow-y-auto -->
     <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
         <!-- Dashboard -->
-        
-        {{-- <a href="{{ route('dashboard') }}" class="flex items-center px-4 py-3 {{ Request::routeIs('dashboard') ? 'text-white bg-indigo-600 dark:bg-indigo-500' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' }} rounded-lg transition-colors {{ Request::routeIs('dashboard') ? 'shadow-sm' : '' }}">
-            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-            </svg>
-            <span class="font-medium">Dashboard</span>
-        </a> --}}
+        <x-nav.button route="dashboard"
+            icon="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+            value="Dashboard" />
 
         <!-- Form Dropdown -->
         <div>
-            <button onclick="toggleDropdown('form')"
-                class="w-full flex items-center justify-between px-4 py-3 {{ Request::routeIs('form.*') ? 'text-white bg-indigo-600 dark:bg-indigo-500' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' }} rounded-lg transition-colors {{ Request::routeIs('form.*') ? 'shadow-sm' : '' }}">
-                <div class="flex items-center">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                        </path>
-                    </svg>
-                    <span class="font-medium">Form</span>
-                </div>
-                <svg id="form-arrow"
-                    class="w-4 h-4 transition-transform {{ Request::routeIs('form.*') ? 'rotate-180' : '' }}"
-                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-            </button>
-            <div id="form-dropdown" class="ml-8 mt-1 space-y-1 {{ Request::routeIs('form.*') ? '' : 'hidden' }}">
-                <a href="{{ route('form.uang-masuk') }}"
-                    class="flex items-center px-4 py-2 {{ Request::routeIs('form.uang-masuk') ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50' }} rounded-lg transition-colors text-sm">
-                    <span>Uang Masuk</span>
-                </a>
-                <a href="{{ route('form.uang-keluar') }}"
-                    class="flex items-center px-4 py-2 {{ Request::routeIs('form.uang-keluar') ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50' }} rounded-lg transition-colors text-sm">
-                    <span>Uang Keluar</span>
-                </a>
-                <a href="{{ route('form.omset') }}"
-                    class="flex items-center px-4 py-2 {{ Request::routeIs('form.omset') ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50' }} rounded-lg transition-colors text-sm">
-                    <span>Omset</span>
-                </a>
-            </div>
+            <x-nav.dropdown label="Form"
+                icon="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                prefix="form.*" :items="[
+                    ['label' => 'Uang Masuk', 'route' => 'form.uang-masuk'],
+                    ['label' => 'Uang Keluar', 'route' => 'form.uang-keluar'],
+                    ['label' => 'Omset', 'route' => 'form.omset'],
+                ]" />
         </div>
 
         <!-- Daftar Dropdown -->
         <div>
-            <button onclick="toggleDropdown('daftar')"
-                class="w-full flex items-center justify-between px-4 py-3 {{ Request::routeIs('daftar.*') ? 'text-white bg-indigo-600 dark:bg-indigo-500' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' }} rounded-lg transition-colors {{ Request::routeIs('daftar.*') ? 'shadow-sm' : '' }}">
-                <div class="flex items-center">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
-                        </path>
-                    </svg>
-                    <span class="font-medium">Daftar</span>
-                </div>
-                <svg id="daftar-arrow"
-                    class="w-4 h-4 transition-transform {{ Request::routeIs('daftar.*') ? 'rotate-180' : '' }}"
-                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-            </button>
-            <div id="daftar-dropdown" class="ml-8 mt-1 space-y-1 {{ Request::routeIs('daftar.*') ? '' : 'hidden' }}">
-                <a href="{{ route('daftar.pettycash') }}"
-                    class="flex items-center px-4 py-2 {{ Request::routeIs('daftar.pettycash') ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50' }} rounded-lg transition-colors text-sm">
-                    <span>Petty Cash</span>
-                </a>
-                <a href="{{ route('daftar.omset') }}"
-                    class="flex items-center px-4 py-2 {{ Request::routeIs('daftar.omset') ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50' }} rounded-lg transition-colors text-sm">
-                    <span>Omset</span>
-                </a>
-            </div>
+            <x-nav.dropdown label="Daftar"
+                icon="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                prefix="Dafter.*" :items="[
+                    ['label' => 'Petty Cash', 'route' => 'daftar.pettycash'],
+                    ['label' => 'Omset', 'route' => 'daftar.omset'],
+                ]" />
         </div>
 
         <!-- Master Dropdown -->
         <div>
-            <button onclick="toggleDropdown('master')"
-                class="w-full flex items-center justify-between px-4 py-3 {{ Request::routeIs('master.*') ? 'text-white bg-indigo-600 dark:bg-indigo-500' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' }} rounded-lg transition-colors {{ Request::routeIs('master.*') ? 'shadow-sm' : '' }}">
-                <div class="flex items-center">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
-                        </path>
-                    </svg>
-                    <span class="font-medium">Master</span>
-                </div>
-                <svg id="master-arrow"
-                    class="w-4 h-4 transition-transform {{ Request::routeIs('master.*') ? 'rotate-180' : '' }}"
-                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-            </button>
-            <div id="master-dropdown" class="ml-8 mt-1 space-y-1 {{ Request::routeIs('master.*') ? '' : 'hidden' }}">
-                <a href=""
-                    class="flex items-center px-4 py-2 {{ Request::routeIs('master.user') ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50' }} rounded-lg transition-colors text-sm">
-                    <span>User</span>
-                </a>
-                <a href=""
-                    class="flex items-center px-4 py-2 {{ Request::routeIs('master.divisi') ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50' }} rounded-lg transition-colors text-sm">
-                    <span>Divisi/Toko</span>
-                </a>
-                <a href=""
-                    class="flex items-center px-4 py-2 {{ Request::routeIs('master.kategori') ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50' }} rounded-lg transition-colors text-sm">
-                    <span>Kategori</span>
-                </a>
-                <a href=""
-                    class="flex items-center px-4 py-2 {{ Request::routeIs('master.vendor') ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50' }} rounded-lg transition-colors text-sm">
-                    <span>Vendor</span>
-                </a>
-            </div>
+            <x-nav.dropdown label="Master"
+                icon="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                prefix="Master.*" :items="[
+                    ['label' => 'User', 'route' => '#'],
+                    ['label' => 'Divisi/Toko', 'route' => '#'],
+                    ['label' => 'Kategori', 'route' => '#'],
+                    ['label' => 'Vendor', 'route' => '#'],
+                ]" />
         </div>
 
         <!-- Laporan Dropdown -->
         <div>
-            <button onclick="toggleDropdown('laporan')"
-                class="w-full flex items-center justify-between px-4 py-3 {{ Request::routeIs('laporan.*') ? 'text-white bg-indigo-600 dark:bg-indigo-500' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' }} rounded-lg transition-colors {{ Request::routeIs('laporan.*') ? 'shadow-sm' : '' }}">
-                <div class="flex items-center">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
-                        </path>
-                    </svg>
-                    <span class="font-medium">Laporan</span>
-                </div>
-                <svg id="laporan-arrow"
-                    class="w-4 h-4 transition-transform {{ Request::routeIs('laporan.*') ? 'rotate-180' : '' }}"
-                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-            </button>
-            <div id="laporan-dropdown"
-                class="ml-8 mt-1 space-y-1 {{ Request::routeIs('laporan.*') ? '' : 'hidden' }}">
-                <a href=""
-                    class="flex items-center px-4 py-2 {{ Request::routeIs('laporan.petty-cash') ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50' }} rounded-lg transition-colors text-sm">
-                    <span>Petty Cash</span>
-                </a>
-                <a href=""
-                    class="flex items-center px-4 py-2 {{ Request::routeIs('laporan.omset') ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50' }} rounded-lg transition-colors text-sm">
-                    <span>Omset</span>
-                </a>
-            </div>
+            <x-nav.dropdown label="Laporan"
+                icon="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                prefix="Laporan.*" :items="[
+                    ['label' => 'Petty Cash', 'route' => 'laporan.petty-cash'],
+                    ['label' => 'Omset', 'route' => 'laporan.omset'],
+                ]" />
         </div>
     </nav>
 
