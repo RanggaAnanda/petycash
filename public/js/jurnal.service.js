@@ -1,0 +1,3 @@
+function getJurnal() {
+  return JURNAL;
+}

@@ -1,0 +1,1107 @@
+<!DOCTYPE html><html lang="id"><head>
+    <meta charset="UTF-8">
+    <title>Daftar Omset</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <script src="./-js-tailwind-config.html.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    height: {
+                        'screen-dvh': '100dvh',
+                    }
+                }
+            }
+        };
+    </script>
+    
+    <style>
+        @media (max-width: 767px) {
+            .h-mobile-screen {
+                height: 100vh !important;
+                height: -webkit-fill-available !important;
+            }
+            
+            body {
+                overscroll-behavior-y: none;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .sidebar-mobile {
+                max-height: 100vh;
+                max-height: -webkit-fill-available;
+            }
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0px}.inset-y-0{top:0px;bottom:0px}.bottom-full{bottom:100%}.left-0{left:0px}.right-0{right:0px}.top-0{top:0px}.z-40{z-index:40}.z-50{z-index:50}.mb-2{margin-bottom:0.5rem}.ml-8{margin-left:2rem}.mr-2{margin-right:0.5rem}.mr-3{margin-right:0.75rem}.mt-1{margin-top:0.25rem}.mt-auto{margin-top:auto}.mb-1{margin-bottom:0.25rem}.ml-2{margin-left:0.5rem}.mt-2{margin-top:0.5rem}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.h-16{height:4rem}.h-4{height:1rem}.h-5{height:1.25rem}.h-6{height:1.5rem}.h-8{height:2rem}.h-\[calc\(100vh\)\]{height:calc(100vh)}.w-10{width:2.5rem}.w-4{width:1rem}.w-48{width:12rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-72{width:18rem}.w-8{width:2rem}.w-full{width:100%}.w-16{width:4rem}.min-w-0{min-width:0px}.min-w-full{min-width:100%}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}.-translate-x-full{--tw-translate-x:-100%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.cursor-pointer{cursor:pointer}.cursor-not-allowed{cursor:not-allowed}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-end{align-items:flex-end}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-4{gap:1rem}.gap-2{gap:0.5rem}.space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-3 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.75rem * var(--tw-space-x-reverse));margin-left:calc(0.75rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.divide-y > :not([hidden]) ~ :not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px * calc(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px * var(--tw-divide-y-reverse))}.divide-gray-200 > :not([hidden]) ~ :not([hidden]){--tw-divide-opacity:1;border-color:rgb(229 231 235 / var(--tw-divide-opacity, 1))}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-md{border-radius:0.375rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-r{border-right-width:1px}.border-t{border-top-width:1px}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.border-gray-300{--tw-border-opacity:1;border-color:rgb(209 213 219 / var(--tw-border-opacity, 1))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.bg-black{--tw-bg-opacity:1;background-color:rgb(0 0 0 / var(--tw-bg-opacity, 1))}.bg-indigo-50{--tw-bg-opacity:1;background-color:rgb(238 242 255 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.bg-blue-400{--tw-bg-opacity:1;background-color:rgb(96 165 250 / var(--tw-bg-opacity, 1))}.bg-indigo-500{--tw-bg-opacity:1;background-color:rgb(99 102 241 / var(--tw-bg-opacity, 1))}.bg-opacity-50{--tw-bg-opacity:0.5}.p-1{padding:0.25rem}.p-2{padding:0.5rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.p-3{padding:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.pt-4{padding-top:1rem}.pt-2{padding-top:0.5rem}.text-left{text-align:left}.text-center{text-align:center}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.text-2xl{font-size:1.5rem;line-height:2rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-gray-900{--tw-text-opacity:1;color:rgb(17 24 39 / var(--tw-text-opacity, 1))}.text-indigo-600{--tw-text-opacity:1;color:rgb(79 70 229 / var(--tw-text-opacity, 1))}.text-red-400{--tw-text-opacity:1;color:rgb(248 113 113 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.text-green-600{--tw-text-opacity:1;color:rgb(22 163 74 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-200{transition-duration:200ms}.duration-300{transition-duration:300ms}.ease-in-out{transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1)}.hover\:bg-gray-100:hover{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-50:hover{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.hover\:bg-blue-500:hover{--tw-bg-opacity:1;background-color:rgb(59 130 246 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-200:hover{--tw-bg-opacity:1;background-color:rgb(229 231 235 / var(--tw-bg-opacity, 1))}.hover\:text-gray-900:hover{--tw-text-opacity:1;color:rgb(17 24 39 / var(--tw-text-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-blue-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(59 130 246 / var(--tw-ring-opacity, 1))}.dark\:block:is(.dark *){display:block}.dark\:hidden:is(.dark *){display:none}.dark\:divide-gray-700:is(.dark *) > :not([hidden]) ~ :not([hidden]){--tw-divide-opacity:1;border-color:rgb(55 65 81 / var(--tw-divide-opacity, 1))}.dark\:border-gray-700:is(.dark *){--tw-border-opacity:1;border-color:rgb(55 65 81 / var(--tw-border-opacity, 1))}.dark\:border-gray-600:is(.dark *){--tw-border-opacity:1;border-color:rgb(75 85 99 / var(--tw-border-opacity, 1))}.dark\:bg-gray-900:is(.dark *){--tw-bg-opacity:1;background-color:rgb(17 24 39 / var(--tw-bg-opacity, 1))}.dark\:bg-gray-800:is(.dark *){--tw-bg-opacity:1;background-color:rgb(31 41 55 / var(--tw-bg-opacity, 1))}.dark\:bg-indigo-900\/20:is(.dark *){background-color:rgb(49 46 129 / 0.2)}.dark\:bg-gray-700:is(.dark *){--tw-bg-opacity:1;background-color:rgb(55 65 81 / var(--tw-bg-opacity, 1))}.dark\:bg-indigo-500:is(.dark *){--tw-bg-opacity:1;background-color:rgb(99 102 241 / var(--tw-bg-opacity, 1))}.dark\:text-gray-300:is(.dark *){--tw-text-opacity:1;color:rgb(209 213 219 / var(--tw-text-opacity, 1))}.dark\:text-gray-400:is(.dark *){--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.dark\:text-indigo-400:is(.dark *){--tw-text-opacity:1;color:rgb(129 140 248 / var(--tw-text-opacity, 1))}.dark\:text-white:is(.dark *){--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.dark\:text-gray-100:is(.dark *){--tw-text-opacity:1;color:rgb(243 244 246 / var(--tw-text-opacity, 1))}.dark\:text-gray-200:is(.dark *){--tw-text-opacity:1;color:rgb(229 231 235 / var(--tw-text-opacity, 1))}.dark\:text-gray-600:is(.dark *){--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.dark\:hover\:bg-gray-700:hover:is(.dark *){--tw-bg-opacity:1;background-color:rgb(55 65 81 / var(--tw-bg-opacity, 1))}.dark\:hover\:bg-gray-700\/50:hover:is(.dark *){background-color:rgb(55 65 81 / 0.5)}.dark\:hover\:text-white:hover:is(.dark *){--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}@media (min-width: 768px){.md\:static{position:static}.md\:block{display:block}.md\:table-cell{display:table-cell}.md\:hidden{display:none}.md\:h-screen{height:100vh}.md\:translate-x-0{--tw-translate-x:0px;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:p-6{padding:1.5rem}.md\:shadow-none{--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}}</style></head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+
+<div class="flex md:h-screen h-mobile-screen overflow-hidden">
+    <header class="md:hidden fixed top-0 left-0 right-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 z-50 px-4 py-3 flex items-center justify-between shadow-sm h-16">
+        <div class="flex items-center">
+            <button id="mobile-menu-btn" class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors mr-3" onclick="toggleSidebar()" aria-label="Toggle menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+            <h1 class="text-lg font-semibold text-gray-900 dark:text-white">Daftar Omset</h1>
+        </div>
+        <div class="flex items-center space-x-2">
+            <button onclick="toggleTheme()" class="p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Toggle theme">
+                <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                </svg>
+                <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                </svg>
+            </button>
+            <img src="https://ui-avatars.com/api/?name=Tom+Cook&amp;background=6366f1&amp;color=fff" alt="User" class="w-8 h-8 rounded-full">
+        </div>
+    </header>
+
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden hidden" onclick="toggleSidebar()"></div>
+
+    <!-- Sidebar -->
+<aside id="sidebar" class="fixed md:static inset-y-0 left-0 w-72 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 h-[calc(100vh)] md:h-screen transform md:translate-x-0 transition-all duration-300 ease-in-out z-50 flex flex-col shadow-lg md:shadow-none sidebar-mobile" ontouchstart="handleTouchStart(event)" ontouchmove="handleTouchMove(event)" ontouchend="handleTouchEnd(event)" style="transform: translateX(0px);">
+    <!-- Logo -->
+    <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <svg class="w-10 h-10" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 20C8 20 12 12 20 12C28 12 32 20 32 20C32 20 28 28 20 28C12 28 8 20 8 20Z" fill="#6366f1"></path>
+                    <path d="M12 20C12 20 14 16 18 16C22 16 24 20 24 20C24 20 22 24 18 24C14 24 12 20 12 20Z" fill="#818cf8"></path>
+                </svg>
+                <span class="text-xl font-bold text-gray-900 dark:text-white">Planet Fashion</span>
+            </div>
+            <button onclick="toggleSidebar()" class="md:hidden text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors p-1" aria-label="Close menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Theme Toggle Button (Desktop) -->
+    <div class="hidden md:block px-4 pt-4">
+        <button onclick="toggleTheme()" class="w-full flex items-center justify-center px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Toggle theme">
+            <svg class="w-5 h-5 mr-2 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+                </path>
+            </svg>
+            <svg class="w-5 h-5 mr-2 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+            </svg>
+            <span class="text-sm font-medium hidden dark:block">Light Mode</span>
+            <span class="text-sm font-medium block dark:hidden">Dark Mode</span>
+        </button>
+    </div>
+
+    <!-- Menu - Tambah overflow-y-auto -->
+    <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
+        <!-- Dashboard -->
+        <a href="./-dashboard.html" class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+    
+    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+        </path>
+    </svg>
+    
+    <span class="font-medium">Dashboard</span>
+</a>
+
+        <!-- Form Dropdown -->
+        <div>
+            <button onclick="toggleDropdown('form.*')" class="w-full flex items-center justify-between px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+
+    <div class="flex items-center">
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+        <span class="font-medium">Form</span>
+    </div>
+
+    <svg id="form.*-arrow" class="w-4 h-4 transition-transform " fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+    </svg>
+</button>
+
+<div id="form.*-dropdown" class="ml-8 mt-1 space-y-1 hidden">
+                    <a href="./-form-uang-masuk.html" class="flex items-center px-4 py-2 
+            text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50 
+            rounded-lg transition-colors text-sm">
+            <span>Uang Masuk</span>
+        </a>
+                    <a href="./-form-uang-keluar.html" class="flex items-center px-4 py-2 
+            text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50 
+            rounded-lg transition-colors text-sm">
+            <span>Uang Keluar</span>
+        </a>
+                    <a href="./-form-omset.html" class="flex items-center px-4 py-2 
+            text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50 
+            rounded-lg transition-colors text-sm">
+            <span>Omset</span>
+        </a>
+    
+</div>
+        </div>
+
+        <!-- Daftar Dropdown -->
+        <div>
+            <button onclick="toggleDropdown('Dafter.*')" class="w-full flex items-center justify-between px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+
+    <div class="flex items-center">
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+        </svg>
+        <span class="font-medium">Daftar</span>
+    </div>
+
+    <svg id="Dafter.*-arrow" class="w-4 h-4 transition-transform " fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+    </svg>
+</button>
+
+<div id="Dafter.*-dropdown" class="ml-8 mt-1 space-y-1 hidden">
+                    <a href="./-daftar-pettycash.html" class="flex items-center px-4 py-2 
+            text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50 
+            rounded-lg transition-colors text-sm">
+            <span>Petty Cash</span>
+        </a>
+                    <a href="./-daftar-omset.html" class="flex items-center px-4 py-2 
+            text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20 
+            rounded-lg transition-colors text-sm">
+            <span>Omset</span>
+        </a>
+    
+</div>
+        </div>
+
+        <!-- Master Dropdown -->
+        <div>
+            <button onclick="toggleDropdown('master.*')" class="w-full flex items-center justify-between px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+
+    <div class="flex items-center">
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+        </svg>
+        <span class="font-medium">Master</span>
+    </div>
+
+    <svg id="master.*-arrow" class="w-4 h-4 transition-transform " fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+    </svg>
+</button>
+
+<div id="master.*-dropdown" class="ml-8 mt-1 space-y-1 hidden">
+                    <a href="./-master-users.html" class="flex items-center px-4 py-2 
+            text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50 
+            rounded-lg transition-colors text-sm">
+            <span>User</span>
+        </a>
+                    <a href="./-master-tokos.html" class="flex items-center px-4 py-2 
+            text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50 
+            rounded-lg transition-colors text-sm">
+            <span>Divisi/Toko</span>
+        </a>
+                    <a href="./-master-kategori.html" class="flex items-center px-4 py-2 
+            text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50 
+            rounded-lg transition-colors text-sm">
+            <span>Kategori</span>
+        </a>
+                    <a href="./-master-vendor.html" class="flex items-center px-4 py-2 
+            text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50 
+            rounded-lg transition-colors text-sm">
+            <span>Vendor</span>
+        </a>
+    
+</div>
+        </div>
+
+        <!-- Laporan Dropdown -->
+        <div>
+            <button onclick="toggleDropdown('Laporan.')" class="w-full flex items-center justify-between px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+
+    <div class="flex items-center">
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+        </svg>
+        <span class="font-medium">Laporan</span>
+    </div>
+
+    <svg id="Laporan.-arrow" class="w-4 h-4 transition-transform " fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+    </svg>
+</button>
+
+<div id="Laporan.-dropdown" class="ml-8 mt-1 space-y-1 hidden">
+                    <a href="./-laporan-pettycash.html" class="flex items-center px-4 py-2 
+            text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50 
+            rounded-lg transition-colors text-sm">
+            <span>Petty Cash</span>
+        </a>
+                    <a href="./-laporan-omset.html" class="flex items-center px-4 py-2 
+            text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50 
+            rounded-lg transition-colors text-sm">
+            <span>Omset</span>
+        </a>
+    
+</div>
+        </div>
+    </nav>
+
+    <!-- User Profile -->
+    <div class="p-4 border-t border-gray-200 dark:border-gray-700 mt-auto relative">
+    <div id="profileBtn" class="flex items-center px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+        <img src="https://ui-avatars.com/api/?name=Tom+Cook&amp;background=6366f1&amp;color=fff" alt="Rangga Ananda" class="w-10 h-10 rounded-full mr-3">
+        <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-900 dark:text-white truncate">Rangga Ananda</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400 truncate">rangga@test</p>
+        </div>
+        <svg class="w-5 h-5 text-gray-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+    </div>
+
+    <!-- Dropdown Menu -->
+    <div id="profileDropdown" class="absolute bottom-full left-0 mb-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden hidden z-50">
+        <a href="./-profile.html" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Profile</a>
+        <a href="./-dashboard.html" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-red-400">Logout</a>
+    </div>
+</div>
+</aside>
+
+<script>
+    function toggleDropdown(menu) {
+        const dropdown = document.getElementById(menu + '-dropdown');
+        const arrow = document.getElementById(menu + '-arrow');
+
+        dropdown.classList.toggle('hidden');
+        arrow.classList.toggle('rotate-180');
+    }
+
+    const profileBtn = document.getElementById('profileBtn');
+    const profileDropdown = document.getElementById('profileDropdown');
+
+    profileBtn.addEventListener('click', () => {
+        profileDropdown.classList.toggle('hidden');
+    });
+
+    // Tutup dropdown jika klik di luar
+    document.addEventListener('click', (e) => {
+        if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+            profileDropdown.classList.add('hidden');
+        }
+    });
+</script>
+
+    <div class="flex-1 flex flex-col md:h-screen h-mobile-screen overflow-hidden">
+        <div class="md:hidden h-16 flex-shrink-0"></div>
+        <main class="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+            <div class="p-4 md:p-6">
+                    <div class="space-y-6">
+
+        <div>
+            <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100 ">
+                Daftar Omset
+            </h2>
+        </div>
+
+        <!-- ================= FILTER ================= -->
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow border">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+
+                <div>
+                    <label class="block mb-1 text-lg font-medium text-gray-700 dark:text-gray-300">
+    Rentang Waktu
+</label>
+                    <select name="rentang" class="w-full rounded-lg p-2 text-lg
+            bg-white dark:bg-gray-700
+            text-gray-800 dark:text-gray-200
+            border border-gray-300 dark:border-gray-600
+            focus:ring-2 focus:ring-blue-500
+            focus:outline-none" id="filterTime">
+            <option value="all">
+                            Semua
+                    </option>
+            <option value="today">
+                            Hari Ini
+                    </option>
+            <option value="week">
+                            1 Minggu Terakhir
+                    </option>
+            <option value="month">
+                            1 Bulan Terakhir
+                    </option>
+    </select>
+                </div>
+
+                <div>
+                    <label class="block mb-1 text-lg font-medium text-gray-700 dark:text-gray-300">
+    Toko
+</label>
+                    <select name="toko" class="w-full rounded-lg p-2 text-lg
+            bg-white dark:bg-gray-700
+            text-gray-800 dark:text-gray-200
+            border border-gray-300 dark:border-gray-600
+            focus:ring-2 focus:ring-blue-500
+            focus:outline-none" id="filterToko">
+            <option value="all">
+                            Semua Toko
+                    </option>
+            <option value="Planet Fashion Bandung">
+                            Planet Fashion Bandung
+                    </option>
+            <option value="Planet Fashion Jakarta">
+                            Planet Fashion Jakarta
+                    </option>
+            <option value="Planet Fashion Bekasi">
+                            Planet Fashion Bekasi
+                    </option>
+    </select>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
+    <table class="min-w-full text-sm">
+        <thead>
+                <tr>
+                    <th class="px-4 py-3 text-left font-semibold
+            text-gray-700 dark:text-gray-200
+            bg-gray-100 dark:bg-gray-700
+            border-b border-gray-200 dark:border-gray-600
+            text-lg
+         w-16 text-center">
+    No
+</th>
+                    <th class="px-4 py-3 text-left font-semibold
+            text-gray-700 dark:text-gray-200
+            bg-gray-100 dark:bg-gray-700
+            border-b border-gray-200 dark:border-gray-600
+            text-lg">
+    Tanggal
+</th>
+                    <th class="px-4 py-3 text-left font-semibold
+            text-gray-700 dark:text-gray-200
+            bg-gray-100 dark:bg-gray-700
+            border-b border-gray-200 dark:border-gray-600
+            text-lg">
+    Toko
+</th>
+
+                    <!-- Desktop only -->
+                    <th class="px-4 py-3 text-left font-semibold
+            text-gray-700 dark:text-gray-200
+            bg-gray-100 dark:bg-gray-700
+            border-b border-gray-200 dark:border-gray-600
+            text-lg
+         hidden md:table-cell text-center">
+    Omset
+</th>
+                    <th class="px-4 py-3 text-left font-semibold
+            text-gray-700 dark:text-gray-200
+            bg-gray-100 dark:bg-gray-700
+            border-b border-gray-200 dark:border-gray-600
+            text-lg
+         hidden md:table-cell text-center">
+    Action
+</th>
+                </tr>
+            </thead>
+
+            <tbody class="bg-white dark:bg-gray-800
+        divide-y divide-gray-200 dark:divide-gray-700
+        text-gray-700 dark:text-gray-200
+        text-lg" id="tableBody">
+            <tr class="border-b hover:bg-gray-100 dark:hover:bg-gray-700">
+                <td class="p-3 flex items-center gap-2">
+                        <button onclick="toggleDetail('row-0')" class="toggle-btn md:hidden transition-transform duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                        1
+                    </td>
+
+                <td class="p-3">
+                    22/12/2025
+                </td>
+
+                <td class="p-3">
+                    Planet Fashion Bandung
+                </td>
+
+                <!-- Desktop -->
+                <td class="p-3 hidden md:table-cell text-green-600 font-semibold text-center">
+                    Rp 1.500.000
+                </td>
+                <td class="p-3 hidden md:table-cell text-center">
+                    <a href="./-form-edit-omset.html" class="inline-flex items-center justify-center px-3 py-1 rounded-lg
+                    bg-blue-400 hover:bg-blue-500 text-white text-lg font-medium">
+                        Edit
+                    </a>
+                </td>
+            </tr>
+
+            <!-- MOBILE DETAIL -->
+            <tr id="row-0" class="hidden bg-gray-50 dark:bg-gray-800 md:hidden">
+                <td></td>
+                <td colspan="3" class="p-3 text-lg">
+                    <div class="flex">
+                        <span class="font-medium">Omset :</span>
+                        <span class="text-green-600 font-semibold ml-2">
+                            Rp 1.500.000
+                        </span>
+                    </div>
+                    <div class="pt-2 mt-2 border-t flex w-full md:hidden">
+                        <a href="./-form-omset.html" class="inline-flex items-center justify-center px-6 py-1 rounded-lg
+                                bg-blue-400 hover:bg-blue-500 text-white text-lg font-medium">
+                            Edit
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr class="border-b hover:bg-gray-100 dark:hover:bg-gray-700">
+                <td class="p-3 flex items-center gap-2">
+                        <button onclick="toggleDetail('row-1')" class="toggle-btn md:hidden transition-transform duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                        2
+                    </td>
+
+                <td class="p-3">
+                    22/12/2025
+                </td>
+
+                <td class="p-3">
+                    Planet Fashion Jakarta
+                </td>
+
+                <!-- Desktop -->
+                <td class="p-3 hidden md:table-cell text-green-600 font-semibold text-center">
+                    Rp 1.800.000
+                </td>
+                <td class="p-3 hidden md:table-cell text-center">
+                    <a href="./-form-edit-omset.html" class="inline-flex items-center justify-center px-3 py-1 rounded-lg
+                    bg-blue-400 hover:bg-blue-500 text-white text-lg font-medium">
+                        Edit
+                    </a>
+                </td>
+            </tr>
+
+            <!-- MOBILE DETAIL -->
+            <tr id="row-1" class="hidden bg-gray-50 dark:bg-gray-800 md:hidden">
+                <td></td>
+                <td colspan="3" class="p-3 text-lg">
+                    <div class="flex">
+                        <span class="font-medium">Omset :</span>
+                        <span class="text-green-600 font-semibold ml-2">
+                            Rp 1.800.000
+                        </span>
+                    </div>
+                    <div class="pt-2 mt-2 border-t flex w-full md:hidden">
+                        <a href="./-form-omset.html" class="inline-flex items-center justify-center px-6 py-1 rounded-lg
+                                bg-blue-400 hover:bg-blue-500 text-white text-lg font-medium">
+                            Edit
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr class="border-b hover:bg-gray-100 dark:hover:bg-gray-700">
+                <td class="p-3 flex items-center gap-2">
+                        <button onclick="toggleDetail('row-2')" class="toggle-btn md:hidden transition-transform duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                        3
+                    </td>
+
+                <td class="p-3">
+                    22/12/2025
+                </td>
+
+                <td class="p-3">
+                    Planet Fashion Bekasi
+                </td>
+
+                <!-- Desktop -->
+                <td class="p-3 hidden md:table-cell text-green-600 font-semibold text-center">
+                    Rp 2.100.000
+                </td>
+                <td class="p-3 hidden md:table-cell text-center">
+                    <a href="./-form-edit-omset.html" class="inline-flex items-center justify-center px-3 py-1 rounded-lg
+                    bg-blue-400 hover:bg-blue-500 text-white text-lg font-medium">
+                        Edit
+                    </a>
+                </td>
+            </tr>
+
+            <!-- MOBILE DETAIL -->
+            <tr id="row-2" class="hidden bg-gray-50 dark:bg-gray-800 md:hidden">
+                <td></td>
+                <td colspan="3" class="p-3 text-lg">
+                    <div class="flex">
+                        <span class="font-medium">Omset :</span>
+                        <span class="text-green-600 font-semibold ml-2">
+                            Rp 2.100.000
+                        </span>
+                    </div>
+                    <div class="pt-2 mt-2 border-t flex w-full md:hidden">
+                        <a href="./-form-omset.html" class="inline-flex items-center justify-center px-6 py-1 rounded-lg
+                                bg-blue-400 hover:bg-blue-500 text-white text-lg font-medium">
+                            Edit
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr class="border-b hover:bg-gray-100 dark:hover:bg-gray-700">
+                <td class="p-3 flex items-center gap-2">
+                        <button onclick="toggleDetail('row-3')" class="toggle-btn md:hidden transition-transform duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                        4
+                    </td>
+
+                <td class="p-3">
+                    21/12/2025
+                </td>
+
+                <td class="p-3">
+                    Planet Fashion Bandung
+                </td>
+
+                <!-- Desktop -->
+                <td class="p-3 hidden md:table-cell text-green-600 font-semibold text-center">
+                    Rp 1.550.000
+                </td>
+                <td class="p-3 hidden md:table-cell text-center">
+                    <a href="./-form-edit-omset.html" class="inline-flex items-center justify-center px-3 py-1 rounded-lg
+                    bg-blue-400 hover:bg-blue-500 text-white text-lg font-medium">
+                        Edit
+                    </a>
+                </td>
+            </tr>
+
+            <!-- MOBILE DETAIL -->
+            <tr id="row-3" class="hidden bg-gray-50 dark:bg-gray-800 md:hidden">
+                <td></td>
+                <td colspan="3" class="p-3 text-lg">
+                    <div class="flex">
+                        <span class="font-medium">Omset :</span>
+                        <span class="text-green-600 font-semibold ml-2">
+                            Rp 1.550.000
+                        </span>
+                    </div>
+                    <div class="pt-2 mt-2 border-t flex w-full md:hidden">
+                        <a href="./-form-omset.html" class="inline-flex items-center justify-center px-6 py-1 rounded-lg
+                                bg-blue-400 hover:bg-blue-500 text-white text-lg font-medium">
+                            Edit
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr class="border-b hover:bg-gray-100 dark:hover:bg-gray-700">
+                <td class="p-3 flex items-center gap-2">
+                        <button onclick="toggleDetail('row-4')" class="toggle-btn md:hidden transition-transform duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                        5
+                    </td>
+
+                <td class="p-3">
+                    21/12/2025
+                </td>
+
+                <td class="p-3">
+                    Planet Fashion Jakarta
+                </td>
+
+                <!-- Desktop -->
+                <td class="p-3 hidden md:table-cell text-green-600 font-semibold text-center">
+                    Rp 1.850.000
+                </td>
+                <td class="p-3 hidden md:table-cell text-center">
+                    <a href="./-form-edit-omset.html" class="inline-flex items-center justify-center px-3 py-1 rounded-lg
+                    bg-blue-400 hover:bg-blue-500 text-white text-lg font-medium">
+                        Edit
+                    </a>
+                </td>
+            </tr>
+
+            <!-- MOBILE DETAIL -->
+            <tr id="row-4" class="hidden bg-gray-50 dark:bg-gray-800 md:hidden">
+                <td></td>
+                <td colspan="3" class="p-3 text-lg">
+                    <div class="flex">
+                        <span class="font-medium">Omset :</span>
+                        <span class="text-green-600 font-semibold ml-2">
+                            Rp 1.850.000
+                        </span>
+                    </div>
+                    <div class="pt-2 mt-2 border-t flex w-full md:hidden">
+                        <a href="./-form-omset.html" class="inline-flex items-center justify-center px-6 py-1 rounded-lg
+                                bg-blue-400 hover:bg-blue-500 text-white text-lg font-medium">
+                            Edit
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr class="border-b hover:bg-gray-100 dark:hover:bg-gray-700">
+                <td class="p-3 flex items-center gap-2">
+                        <button onclick="toggleDetail('row-5')" class="toggle-btn md:hidden transition-transform duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                        6
+                    </td>
+
+                <td class="p-3">
+                    21/12/2025
+                </td>
+
+                <td class="p-3">
+                    Planet Fashion Bekasi
+                </td>
+
+                <!-- Desktop -->
+                <td class="p-3 hidden md:table-cell text-green-600 font-semibold text-center">
+                    Rp 2.150.000
+                </td>
+                <td class="p-3 hidden md:table-cell text-center">
+                    <a href="./-form-edit-omset.html" class="inline-flex items-center justify-center px-3 py-1 rounded-lg
+                    bg-blue-400 hover:bg-blue-500 text-white text-lg font-medium">
+                        Edit
+                    </a>
+                </td>
+            </tr>
+
+            <!-- MOBILE DETAIL -->
+            <tr id="row-5" class="hidden bg-gray-50 dark:bg-gray-800 md:hidden">
+                <td></td>
+                <td colspan="3" class="p-3 text-lg">
+                    <div class="flex">
+                        <span class="font-medium">Omset :</span>
+                        <span class="text-green-600 font-semibold ml-2">
+                            Rp 2.150.000
+                        </span>
+                    </div>
+                    <div class="pt-2 mt-2 border-t flex w-full md:hidden">
+                        <a href="./-form-omset.html" class="inline-flex items-center justify-center px-6 py-1 rounded-lg
+                                bg-blue-400 hover:bg-blue-500 text-white text-lg font-medium">
+                            Edit
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr class="border-b hover:bg-gray-100 dark:hover:bg-gray-700">
+                <td class="p-3 flex items-center gap-2">
+                        <button onclick="toggleDetail('row-6')" class="toggle-btn md:hidden transition-transform duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                        7
+                    </td>
+
+                <td class="p-3">
+                    20/12/2025
+                </td>
+
+                <td class="p-3">
+                    Planet Fashion Bandung
+                </td>
+
+                <!-- Desktop -->
+                <td class="p-3 hidden md:table-cell text-green-600 font-semibold text-center">
+                    Rp 1.600.000
+                </td>
+                <td class="p-3 hidden md:table-cell text-center">
+                    <a href="./-form-edit-omset.html" class="inline-flex items-center justify-center px-3 py-1 rounded-lg
+                    bg-blue-400 hover:bg-blue-500 text-white text-lg font-medium">
+                        Edit
+                    </a>
+                </td>
+            </tr>
+
+            <!-- MOBILE DETAIL -->
+            <tr id="row-6" class="hidden bg-gray-50 dark:bg-gray-800 md:hidden">
+                <td></td>
+                <td colspan="3" class="p-3 text-lg">
+                    <div class="flex">
+                        <span class="font-medium">Omset :</span>
+                        <span class="text-green-600 font-semibold ml-2">
+                            Rp 1.600.000
+                        </span>
+                    </div>
+                    <div class="pt-2 mt-2 border-t flex w-full md:hidden">
+                        <a href="./-form-omset.html" class="inline-flex items-center justify-center px-6 py-1 rounded-lg
+                                bg-blue-400 hover:bg-blue-500 text-white text-lg font-medium">
+                            Edit
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr class="border-b hover:bg-gray-100 dark:hover:bg-gray-700">
+                <td class="p-3 flex items-center gap-2">
+                        <button onclick="toggleDetail('row-7')" class="toggle-btn md:hidden transition-transform duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                        8
+                    </td>
+
+                <td class="p-3">
+                    20/12/2025
+                </td>
+
+                <td class="p-3">
+                    Planet Fashion Jakarta
+                </td>
+
+                <!-- Desktop -->
+                <td class="p-3 hidden md:table-cell text-green-600 font-semibold text-center">
+                    Rp 1.900.000
+                </td>
+                <td class="p-3 hidden md:table-cell text-center">
+                    <a href="./-form-edit-omset.html" class="inline-flex items-center justify-center px-3 py-1 rounded-lg
+                    bg-blue-400 hover:bg-blue-500 text-white text-lg font-medium">
+                        Edit
+                    </a>
+                </td>
+            </tr>
+
+            <!-- MOBILE DETAIL -->
+            <tr id="row-7" class="hidden bg-gray-50 dark:bg-gray-800 md:hidden">
+                <td></td>
+                <td colspan="3" class="p-3 text-lg">
+                    <div class="flex">
+                        <span class="font-medium">Omset :</span>
+                        <span class="text-green-600 font-semibold ml-2">
+                            Rp 1.900.000
+                        </span>
+                    </div>
+                    <div class="pt-2 mt-2 border-t flex w-full md:hidden">
+                        <a href="./-form-omset.html" class="inline-flex items-center justify-center px-6 py-1 rounded-lg
+                                bg-blue-400 hover:bg-blue-500 text-white text-lg font-medium">
+                            Edit
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr class="border-b hover:bg-gray-100 dark:hover:bg-gray-700">
+                <td class="p-3 flex items-center gap-2">
+                        <button onclick="toggleDetail('row-8')" class="toggle-btn md:hidden transition-transform duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                        9
+                    </td>
+
+                <td class="p-3">
+                    20/12/2025
+                </td>
+
+                <td class="p-3">
+                    Planet Fashion Bekasi
+                </td>
+
+                <!-- Desktop -->
+                <td class="p-3 hidden md:table-cell text-green-600 font-semibold text-center">
+                    Rp 2.200.000
+                </td>
+                <td class="p-3 hidden md:table-cell text-center">
+                    <a href="./-form-edit-omset.html" class="inline-flex items-center justify-center px-3 py-1 rounded-lg
+                    bg-blue-400 hover:bg-blue-500 text-white text-lg font-medium">
+                        Edit
+                    </a>
+                </td>
+            </tr>
+
+            <!-- MOBILE DETAIL -->
+            <tr id="row-8" class="hidden bg-gray-50 dark:bg-gray-800 md:hidden">
+                <td></td>
+                <td colspan="3" class="p-3 text-lg">
+                    <div class="flex">
+                        <span class="font-medium">Omset :</span>
+                        <span class="text-green-600 font-semibold ml-2">
+                            Rp 2.200.000
+                        </span>
+                    </div>
+                    <div class="pt-2 mt-2 border-t flex w-full md:hidden">
+                        <a href="./-form-omset.html" class="inline-flex items-center justify-center px-6 py-1 rounded-lg
+                                bg-blue-400 hover:bg-blue-500 text-white text-lg font-medium">
+                            Edit
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr class="border-b hover:bg-gray-100 dark:hover:bg-gray-700">
+                <td class="p-3 flex items-center gap-2">
+                        <button onclick="toggleDetail('row-9')" class="toggle-btn md:hidden transition-transform duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                        10
+                    </td>
+
+                <td class="p-3">
+                    19/12/2025
+                </td>
+
+                <td class="p-3">
+                    Planet Fashion Bandung
+                </td>
+
+                <!-- Desktop -->
+                <td class="p-3 hidden md:table-cell text-green-600 font-semibold text-center">
+                    Rp 1.650.000
+                </td>
+                <td class="p-3 hidden md:table-cell text-center">
+                    <a href="./-form-edit-omset.html" class="inline-flex items-center justify-center px-3 py-1 rounded-lg
+                    bg-blue-400 hover:bg-blue-500 text-white text-lg font-medium">
+                        Edit
+                    </a>
+                </td>
+            </tr>
+
+            <!-- MOBILE DETAIL -->
+            <tr id="row-9" class="hidden bg-gray-50 dark:bg-gray-800 md:hidden">
+                <td></td>
+                <td colspan="3" class="p-3 text-lg">
+                    <div class="flex">
+                        <span class="font-medium">Omset :</span>
+                        <span class="text-green-600 font-semibold ml-2">
+                            Rp 1.650.000
+                        </span>
+                    </div>
+                    <div class="pt-2 mt-2 border-t flex w-full md:hidden">
+                        <a href="./-form-omset.html" class="inline-flex items-center justify-center px-6 py-1 rounded-lg
+                                bg-blue-400 hover:bg-blue-500 text-white text-lg font-medium">
+                            Edit
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+    </table>
+</div>
+
+        <!-- TOTAL OMSET -->
+        <div id="totalOmset" class="bg-white dark:bg-gray-800 border rounded-lg p-4 shadow flex justify-between items-center">
+            <span class="font-semibold text-gray-700 dark:text-gray-200">
+                Total Omset
+            </span>
+            <span id="totalOmsetValue" class="text-green-600 font-bold text-lg">Rp 60.750.000</span>
+        </div>
+
+
+
+        <!-- ================= PAGINATION ================= -->
+        <div class="flex justify-center">
+            <div id="pagination" class="flex items-center gap-1 bg-white dark:bg-gray-800 border rounded-lg p-1 shadow-sm"><button class="px-3 py-1 text-sm rounded-md transition  bg-white text-gray-700 hover:bg-gray-200 border border-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:border-gray-700 text-gray-400 cursor-not-allowed dark:text-gray-600" disabled="">Prev</button><button class="px-3 py-1 text-sm rounded-md transition  bg-white text-gray-700 hover:bg-gray-200 border border-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:border-gray-700 bg-indigo-500 text-white shadow dark:bg-indigo-500">1</button><button class="px-3 py-1 text-sm rounded-md transition  bg-white text-gray-700 hover:bg-gray-200 border border-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:border-gray-700">2</button><button class="px-3 py-1 text-sm rounded-md transition  bg-white text-gray-700 hover:bg-gray-200 border border-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:border-gray-700">3</button><button class="px-3 py-1 text-sm rounded-md transition  bg-white text-gray-700 hover:bg-gray-200 border border-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:border-gray-700">Next</button></div>
+        </div>
+
+    </div>
+
+    <script src="./-js-helpers-pagination.html.js"></script>
+    <script>
+        const perPage = 10;
+        let currentPage = 1;
+        let filteredData = [];
+
+        // ===== DUMMY DATA =====
+        const data = [];
+        const tokoList = [
+            'Planet Fashion Bandung',
+            'Planet Fashion Jakarta',
+            'Planet Fashion Bekasi'
+        ];
+
+        for (let i = 0; i < 10; i++) {
+            const date = new Date();
+            date.setDate(date.getDate() - i);
+
+            tokoList.forEach((toko, idx) => {
+                data.push({
+                    tanggal: new Date(date),
+                    toko,
+                    omset: 1500000 + (idx * 300000) + (i * 50000)
+                });
+            });
+        }
+
+        // ===== FILTER =====
+        function applyFilter() {
+            const time = document.getElementById('filterTime').value;
+            const toko = document.getElementById('filterToko').value;
+            const now = new Date();
+
+            filteredData = data.filter(row => {
+                const diffDay = Math.floor((now - row.tanggal) / 86400000);
+
+                if (time === 'today' && diffDay !== 0) return false;
+                if (time === 'week' && diffDay > 7) return false;
+                if (time === 'month' && diffDay > 30) return false;
+
+                if (toko !== 'all' && row.toko !== toko) return false;
+
+                return true;
+            });
+
+            currentPage = 1;
+            renderTable();
+        }
+
+        document.getElementById('filterTime').addEventListener('change', applyFilter);
+        document.getElementById('filterToko').addEventListener('change', applyFilter);
+
+        // ===== RENDER OMSET =====
+        function renderTotalOmset() {
+            const total = filteredData.reduce((sum, row) => sum + row.omset, 0);
+            document.getElementById('totalOmsetValue').textContent =
+                'Rp ' + total.toLocaleString('id-ID');
+        }
+
+        // ===== RENDER TABLE =====
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+
+            const start = (currentPage - 1) * perPage;
+            const pageData = filteredData.slice(start, start + perPage);
+
+            pageData.forEach((row, index) => {
+                const rowId = `row-${start + index}`;
+
+                tbody.innerHTML += `
+            <tr class="border-b hover:bg-gray-100 dark:hover:bg-gray-700">
+                <td class="p-3 flex items-center gap-2">
+                        <button 
+                            onclick="toggleDetail('${rowId}')" 
+                            class="toggle-btn md:hidden transition-transform duration-200"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="w-4 h-4 text-gray-600 dark:text-gray-300"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                        ${start + index + 1}
+                    </td>
+
+                <td class="p-3">
+                    ${row.tanggal.toLocaleDateString('id-ID')}
+                </td>
+
+                <td class="p-3">
+                    ${row.toko}
+                </td>
+
+                <!-- Desktop -->
+                <td class="p-3 hidden md:table-cell text-green-600 font-semibold text-center">
+                    Rp ${row.omset.toLocaleString('id-ID')}
+                </td>
+                <td class="p-3 hidden md:table-cell text-center">
+                    <a href="./-form-edit-omset.html"
+                    class="inline-flex items-center justify-center px-3 py-1 rounded-lg
+                    bg-blue-400 hover:bg-blue-500 text-white text-lg font-medium">
+                        Edit
+                    </a>
+                </td>
+            </tr>
+
+            <!-- MOBILE DETAIL -->
+            <tr id="${rowId}" class="hidden bg-gray-50 dark:bg-gray-800 md:hidden">
+                <td></td>
+                <td colspan="3" class="p-3 text-lg">
+                    <div class="flex">
+                        <span class="font-medium">Omset :</span>
+                        <span class="text-green-600 font-semibold ml-2">
+                            Rp ${row.omset.toLocaleString('id-ID')}
+                        </span>
+                    </div>
+                    <div class="pt-2 mt-2 border-t flex w-full md:hidden">
+                        <a href="./-form-omset.html"
+                        class="inline-flex items-center justify-center px-6 py-1 rounded-lg
+                                bg-blue-400 hover:bg-blue-500 text-white text-lg font-medium">
+                            Edit
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            `;
+            });
+
+            renderPagination({
+                containerId: 'pagination',
+                currentPage,
+                perPage,
+                totalData: filteredData.length,
+                onChange: changePage
+            });
+
+            renderTotalOmset()
+        }
+
+        // ===== PAGINATION =====
+        window.changePage = function(page) {
+            const totalPages = Math.ceil(filteredData.length / perPage);
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            renderTable();
+        }
+
+        function toggleDetail(id) {
+            const detailRow = document.getElementById(id);
+            const btn = detailRow.previousElementSibling.querySelector('.toggle-btn');
+
+            if (detailRow.classList.contains('hidden')) {
+                detailRow.classList.remove('hidden');
+                btn.classList.add('rotate-90');
+            } else {
+                detailRow.classList.add('hidden');
+                btn.classList.remove('rotate-90');
+            }
+        }
+
+        // ===== INIT =====
+        filteredData = data;
+        renderTable();
+    </script>
+
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="./-js-layout.html.js"></script>
+<script src="./-js-rupiah.html.js"></script>
+
+
+
+</body></html>

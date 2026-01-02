@@ -56,9 +56,9 @@
             <x-nav.dropdown label="Form"
                 icon="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                 prefix="form.*" :items="[
-                    ['label' => 'Uang Masuk', 'route' => 'form.uang-masuk'],
-                    ['label' => 'Uang Keluar', 'route' => 'form.uang-keluar'],
-                    ['label' => 'Omset', 'route' => 'form.omset'],
+                    ['label' => 'Uang Masuk', 'route' => 'forms.uang-masuk.create'],
+                    ['label' => 'Uang Keluar', 'route' => 'forms.uang-keluar.create'],
+                    ['label' => 'Omset', 'route' => 'forms.omset.create'],
                 ]" />
         </div>
 
@@ -67,8 +67,8 @@
             <x-nav.dropdown label="Daftar"
                 icon="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
                 prefix="Dafter.*" :items="[
-                    ['label' => 'Petty Cash', 'route' => 'daftar.pettycash'],
-                    ['label' => 'Omset', 'route' => 'daftar.omset'],
+                    ['label' => 'Petty Cash', 'route' => 'daftar.petycash.index'],
+                    ['label' => 'Omset', 'route' => 'daftar.omset.index'],
                 ]" />
         </div>
 
@@ -78,9 +78,9 @@
                 icon="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
                 prefix="master.*" :items="[
                     ['label' => 'User', 'route' => 'master.users.index'],
-                    ['label' => 'Divisi/Toko', 'route' => 'master.toko.index'],
+                    ['label' => 'Divisi/Toko', 'route' => 'master.stores.index'],
                     ['label' => 'Kategori', 'route' => 'master.kategori.index'],
-                    ['label' => 'Vendor', 'route' => 'master.vendor.index'],
+                    ['label' => 'Vendor', 'route' => 'master.vendors.index'],
                 ]" />
         </div>
 

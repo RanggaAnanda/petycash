@@ -1,7 +1,63 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ExportController;
+// Controllers for master routings
+use App\Http\Controllers\Master\UserController;
+use App\Http\Controllers\Master\StoreController;
+use App\Http\Controllers\Master\VendorController;
+use App\Http\Controllers\Form\UangMasukController;
+
+// Controllers for daftar routings
+use App\Http\Controllers\Daftar\PetycashController;
+use App\Http\Controllers\Form\UangKeluarController;
+
+// Controllers for Form routings
+use App\Http\Controllers\Master\KategoriController;
+use App\Http\Controllers\Form\OmsetController as FormOmsetController;
+use App\Http\Controllers\Daftar\OmsetController as DaftarOmsetController;
+
+
+// Master Resource Routes
+Route::prefix('master')->name('master.')->group(
+    function () {
+        Route::resource('users', UserController::class);
+        Route::resource('stores', StoreController::class);
+        Route::resource('kategori', KategoriController::class);
+        Route::resource('vendors', VendorController::class);
+    }
+);
+
+// Daftar Resource Routes
+Route::prefix('daftar')->name('daftar.')->group(
+    function () {
+        Route::get('omset', [DaftarOmsetController::class, 'index'])
+            ->name('omset.index');
+
+        Route::get('petycash', [PetycashController::class, 'index'])
+            ->name('petycash.index');
+    }
+);
+
+// Form Resource Routes
+Route::prefix('form')->name('forms.')->group(
+    function () {
+        Route::get('omset', [FormOmsetController::class, 'create'])
+            ->name('omset.create');
+        Route::get('omset/edit', [FormOmsetController::class, 'edit'])
+            ->name('omset.edit');
+
+
+        Route::get('uang-masuk',[UangMasukController::class, 'create'])
+            ->name('uang-masuk.create');
+        Route::get('uang-masuk/edit',[UangMasukController::class, 'edit'])
+            ->name('uang-masuk.edit');
+
+        Route::get('uang-keluar',[UangKeluarController::class, 'create'])
+            ->name('uang-keluar.create');
+        Route::get('uang-keluar/edit',[UangKeluarController::class, 'edit'])
+            ->name('uang-keluar.edit');
+    }
+); 
 
 // Rangga
 Route::get('/', function () {
@@ -12,57 +68,86 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
-Route::prefix('form')->group(function () {
+// Route::prefix('form')->group(function () {
 
-    Route::get('/uang-masuk', function () {
-        return view('form.uang-masuk');
-    })->name('form.uang-masuk');
+//     Route::get('/uang-masuk', function () {
+//         return view('form.uang-masuk');
+//     })->name('form.uang-masuk');
 
-    Route::get('/uang-keluar', function () {
-        return view('form.uang-keluar');
-    })->name('form.uang-keluar');
+//     Route::get('/uang-keluar', function () {
+//         return view('form.uang-keluar');
+//     })->name('form.uang-keluar');
 
-    Route::get('/omset', function () {
-        return view('form.omset');
-    })->name('form.omset');
+//     Route::get('/omset', function () {
+//         return view('form.omset');
+//     })->name('form.omset');
 
-    Route::get('edit/uang-masuk', function () {
-        return view('form.uang-masuk-edit');
-    })->name('form.edit.uang-masuk');
+//     Route::get('edit/uang-masuk', function () {
+//         return view('form.uang-masuk-edit');
+//     })->name('form.edit.uang-masuk');
 
-    Route::get('edit/uang-keluar', function () {
-        return view('form.uang-keluar-edit');
-    })->name('form.edit.uang-keluar');
+//     Route::get('edit/uang-keluar', function () {
+//         return view('form.uang-keluar-edit');
+//     })->name('form.edit.uang-keluar');
 
-    Route::get('edit/omset', function () {
-        return view('form.omset-edit');
-    })->name('form.edit.omset');
-});
+//     Route::get('edit/omset', function () {
+//         return view('form.omset-edit');
+//     })->name('form.edit.omset');
+// });
 
-Route::prefix('daftar')->group(function () {
+// Route::prefix('daftar')->group(function () {
 
-    Route::get('/omset', function () {
-        return view('daftar.omset');
-    })->name('daftar.omset');
+//     Route::get('/omset', function () {
+//         return view('daftar.omset');
+//     })->name('daftar.omset');
 
-    Route::get('/pettycash', function () {
-        return view('daftar.pettycash');
-    })->name('daftar.pettycash');
-});
+//     Route::get('/pettycash', function () {
+//         return view('daftar.pettycash');
+//     })->name('daftar.pettycash');
+// });
 
-Route::prefix('laporan')->group(function () {
-    Route::get('/omset', function () {
-        return view('laporan.omset');
-    })->name('laporan.omset');
+// Route::prefix('laporan')->group(function () {
+//     Route::get('/omset', function () {
+//         return view('laporan.omset');
+//     })->name('laporan.omset');
 
-    Route::get('/pettycash', function () {
-        return view('laporan.petycash');
-    })->name('laporan.petycash');
+//     Route::get('/pettycash', function () {
+//         return view('laporan.petycash');
+//     })->name('laporan.petycash');
+// });
+
+
+Route::prefix('akuntansi')->group(function () {
+
+    Route::get('/', function () {
+        return redirect('/akuntansi/jurnal');
+    });
+
+    Route::get('/jurnal', function () {
+        return view('akuntansi.jurnal');
+    })->name('akuntansi.jurnal');
+
+    Route::get('/buku-besar', function () {
+        return view('akuntansi.buku-besar');
+    })->name('akuntansi.buku-besar');
+
+    Route::get('/arus-kas', function () {
+        return view('akuntansi.arus-kas');
+    })->name('akuntansi.arus-kas');
+
+    Route::get('/laba-rugi', function () {
+        return view('akuntansi.laba-rugi');
+    })->name('akuntansi.laba-rugi');
+
+    Route::get('/neraca', function () {
+        return view('akuntansi.neraca');
+    })->name('akuntansi.neraca');
 });
 
 Route::get('/profile', function () {
     return view('profile.index');
 })->name('profile');
+
 
 
 // Zull
@@ -72,52 +157,52 @@ require __DIR__ . '/auth.php';
 Route::prefix('master')->name('master.')->group(function () {
     $resources = [
         // uri => [viewPrefix, routeNameBase]
-        'users' => ['view' => 'master.users', 'name' => 'users'],
-        'tokos' => ['view' => 'master.tokos', 'name' => 'toko'], // keep "toko" singular in route names for backward compatibility
-        'kategori' => ['view' => 'master.kategori', 'name' => 'kategori'],
-        'vendor' => ['view' => 'master.vendor', 'name' => 'vendor'],
+        // 'users' => ['view' => 'master.users', 'name' => 'users'],
+        // 'tokos' => ['view' => 'master.tokos', 'name' => 'toko'], // keep "toko" singular in route names for backward compatibility
+        // 'kategori' => ['view' => 'master.kategori', 'name' => 'kategori'],
+        // 'vendor' => ['view' => 'master.vendor', 'name' => 'vendor'],
     ];
 
     foreach ($resources as $uri => $info) {
-        $view = $info['view'];
-        $base = $info['name'];
+        // $view = $info['view'];
+        // $base = $info['name'];
 
-        Route::get("/{$uri}", function () use ($view) {
-            return view("{$view}.index");
-        })->name("{$base}.index");
+        // Route::get("/{$uri}", function () use ($view) {
+        //     return view("{$view}.index");
+        // })->name("{$base}.index");
 
-        Route::get("/{$uri}/create", function () use ($view) {
-            return view("{$view}.create");
-        })->name("{$base}.create");
+        // Route::get("/{$uri}/create", function () use ($view) {
+        //     return view("{$view}.create");
+        // })->name("{$base}.create");
 
-        Route::post("/{$uri}", function () use ($base) {
-            return redirect()->route("master.{$base}.index")->with('success', "(stub) " . ucfirst($base) . " created.");
-        })->name("{$base}.store");
+        // Route::post("/{$uri}", function () use ($base) {
+        //     return redirect()->route("master.{$base}.index")->with('success', "(stub) " . ucfirst($base) . " created.");
+        // })->name("{$base}.store");
 
-        Route::get("/{$uri}/{id}/edit", function ($id) use ($view) {
-            return view("{$view}.edit");
-        })->name("{$base}.edit");
+        // Route::get("/{$uri}/{id}/edit", function ($id) use ($view) {
+        //     return view("{$view}.edit");
+        // })->name("{$base}.edit");
 
-        Route::patch("/{$uri}/{id}", function ($id) use ($base) {
-            return redirect()->route("master.{$base}.index")->with('success', "(stub) " . ucfirst($base) . " updated: " . $id);
-        })->name("{$base}.update");
+        // Route::patch("/{$uri}/{id}", function ($id) use ($base) {
+        //     return redirect()->route("master.{$base}.index")->with('success', "(stub) " . ucfirst($base) . " updated: " . $id);
+        // })->name("{$base}.update");
 
-        Route::delete("/{$uri}/{id}", function ($id) use ($base) {
-            return redirect()->route("master.{$base}.index")->with('success', "(stub) " . ucfirst($base) . " deleted: " . $id);
-        })->name("{$base}.destroy");
+        // Route::delete("/{$uri}/{id}", function ($id) use ($base) {
+        //     return redirect()->route("master.{$base}.index")->with('success', "(stub) " . ucfirst($base) . " deleted: " . $id);
+        // })->name("{$base}.destroy");
     }
 
     // Subkategori route (show subkategori for a kategori)
     Route::get('/kategori/{id}/subkategori', function ($id) {
         // simple stub: pass kategori object to view; real implementation should use model
-        $kategori = (object)[ 'id' => $id, 'name' => "Kategori " . $id ];
+        $kategori = (object)['id' => $id, 'name' => "Kategori " . $id];
         return view('master.kategori.subkategori', compact('kategori'));
     })->name('kategori.subkategori');
 });
 
 
-Route::get('/export/omset', [ExportController::class, 'exportOmset'])
-    ->name('export.omset');
+// Route::get('/export/omset', [ExportController::class, 'exportOmset'])
+//     ->name('export.omset');
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
