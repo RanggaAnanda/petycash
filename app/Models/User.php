@@ -10,16 +10,19 @@ class User extends Model
 {
     protected $table = 'users';
 
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $fillable = ['name', 'email', 'password', 'store_id', 'role'];
+
+    protected $hidden = ['password'];
 
     protected function password(): Attribute
     {
         return Attribute::make(
-            set: fn($value) => Hash::make($value),
+            set: fn($value) => Hash::make($value)
         );
-    }       
+    }
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
+    }
 }

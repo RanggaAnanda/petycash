@@ -3,63 +3,75 @@
 namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
+use App\Models\Vendor;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 
 class VendorController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * List vendor + form tambah
      */
     public function index()
     {
-        return view('master.vendor.index');
+        $vendors = Vendor::with('kategori')->orderBy('id', 'desc')->paginate(10);
+        $kategoris = Kategori::all();
+
+        return view('master.vendor.index', compact('vendors', 'kategoris'));
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Simpan vendor baru
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'kode' => 'required|unique:vendors,kode',
+            'name' => 'required|string',
+            'kategori_id' => 'nullable|exists:kategoris,id',
+        ]);
+
+        Vendor::create($request->only('kode', 'name', 'kategori_id'));
+
+        return redirect()->route('master.vendor.index')->with('success', 'Vendor berhasil ditambahkan');
     }
 
     /**
-     * Display the specified resource.
+     * Tampilkan form edit vendor
      */
-    public function show(string $id)
+    public function edit($id)
     {
-        //
+        $vendor = Vendor::findOrFail($id);
+        $kategoris = Kategori::all();
+
+        return view('master.vendor.edit', compact('vendor', 'kategoris'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Update vendor
      */
-    public function edit(string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $vendor = Vendor::findOrFail($id);
+
+        $request->validate([
+            'kode' => 'required|unique:vendors,kode,' . $vendor->id,
+            'name' => 'required|string',
+            'kategori_id' => 'nullable|exists:kategoris,id',
+        ]);
+
+        $vendor->update($request->only('kode', 'name', 'kategori_id'));
+
+        return redirect()->route('master.vendor.index')->with('success', 'Vendor berhasil diupdate');
     }
 
     /**
-     * Update the specified resource in storage.
+     * Hapus vendor
      */
-    public function update(Request $request, string $id)
+    public function destroy($id)
     {
-        //
-    }
+        Vendor::findOrFail($id)->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()->route('master.vendor.index')->with('success', 'Vendor berhasil dihapus');
     }
 }

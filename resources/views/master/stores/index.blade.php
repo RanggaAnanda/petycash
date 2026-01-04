@@ -1,192 +1,137 @@
 ﻿@extends('layouts.app')
 
 @section('title', 'Master Toko')
-@section('page-title', 'Master - Toko / Divisi')
+@section('page-title', 'Master - Toko')
 
 @section('content')
-
     <div class="space-y-6">
 
         <!-- FORM TOKO -->
         <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow border">
-            <h3 class="font-semibold mb-4">Form Toko</h3>
+            <h3 class="font-semibold mb-4">{{ isset($editStore) ? 'Edit Toko' : 'Form Toko' }}</h3>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <x-input-label name="Kode" />
-                    <x-input id="kodeToko" />
+            @if (session('success'))
+                <div class="mb-3 text-green-600 text-sm">{{ session('success') }}</div>
+            @endif
+
+            <form action="{{ isset($editStore) ? route('master.stores.update', $editStore) : route('master.stores.store') }}"
+                method="POST">
+                @csrf
+                @if (isset($editStore))
+                    @method('PATCH')
+                @endif
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <x-input-label name="Code" />
+                        <x-input name="code" value="{{ old('code', $editStore->code ?? '') }}" class="text-sm" required />
+                    </div>
+                    <div>
+                        <x-input-label name="Nama Toko" />
+                        <x-input name="name" value="{{ old('name', $editStore->name ?? '') }}" class="text-sm"
+                            required />
+                    </div>
                 </div>
 
-                <div>
-                    <x-input-label name="Toko" />
-                    <x-input id="namaToko" />
+                <div class="mt-4">
+                    <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm">
+                        {{ isset($editStore) ? 'Update' : 'Simpan' }}
+                    </button>
+                    @if (isset($editStore))
+                        <a href="{{ route('master.stores.index') }}"
+                            class="ml-2 px-3 py-2 bg-gray-200 rounded text-sm">Batal</a>
+                    @endif
                 </div>
-            </div>
-
-            <div class="mt-4">
-                <button id="btnSaveToko" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded">Simpan</button>
-                <button id="btnCancelEdit" type="button" class="ml-2 px-3 py-2 bg-gray-200 rounded hidden">Batal</button>
-            </div>
+            </form>
         </div>
 
         <!-- LIST TOKO -->
         <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow border">
             <div class="flex items-center justify-between">
                 <h3 class="font-semibold">List Toko</h3>
-                <div class="flex items-center gap-3">
-                    <select id="perPageToko" class="border rounded px-2 py-1">
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
+
+                <div class="flex items-center gap-3 mt-4">
+                    <select id="perPage" class="border rounded px-2 py-1 text-sm">
+                        @foreach ([10, 25, 50] as $size)
+                            <option value="{{ $size }}" {{ request('per_page', 10) == $size ? 'selected' : '' }}>
+                                {{ $size }}
+                            </option>
+                        @endforeach
                     </select>
                     <span class="text-sm text-gray-500">entries per page</span>
+
+                    <input id="searchToko" type="text" placeholder="Cari code atau nama..."
+                        class="ml-4 px-3 py-2 rounded border text-sm" value="{{ request('search') }}" />
                 </div>
             </div>
 
-            <div class="flex items-center justify-end mt-3">
-                <label class="text-sm mr-2">Search:</label>
-                <input id="filterTokoSearch" type="text" class="px-3 py-2 rounded border" placeholder="Cari..." />
+            <div class="mt-2 overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="w-12 text-center p-3 border-b">No</th>
+                            <th class="text-center p-3 border-b">CODE</th>
+                            <th class="text-center p-3 border-b">NAMA TOKO</th>
+                            <th class="w-20 text-center p-3 border-b">EDIT</th>
+                            <th class="w-20 text-center p-3 border-b">DELETE</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableToko">
+                        @forelse($stores as $i => $store)
+                            <tr class="border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                                <td class="p-3 text-center text-sm">{{ $stores->firstItem() + $i }}</td>
+                                <td class="p-3 text-center text-sm">{{ $store->code }}</td>
+                                <td class="p-3 text-center text-sm">{{ $store->name }}</td>
+                                <td class="p-3 text-center text-sm">
+                                    <a href="{{ route('master.stores.index', ['edit' => $store->id]) }}"
+                                        class="text-blue-600 hover:underline">Edit</a>
+                                </td>
+                                <td class="p-3 text-center text-sm">
+                                    <form method="POST" action="{{ route('master.stores.destroy', $store) }}"
+                                        onsubmit="return confirm('Hapus data?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="text-red-600 hover:underline">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="p-4 text-center text-gray-500 text-sm">Data belum ada</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
 
-            <x-table class="mt-4">
-                <thead>
-                    <tr>
-                        <x-th class="w-12 text-center">No</x-th>
-                        <x-th class="text-center">KODE</x-th>
-                        <x-th class="text-left">TOKO</x-th>
-                        <x-th class="w-24 text-center">EDIT</x-th>
-                        <x-th class="w-24 text-center">DELETE</x-th>
-                    </tr>
-                </thead>
-                <x-tbody id="tableBodyToko" />
-            </x-table>
-
-            <div class="flex items-center justify-between mt-3">
-                <div id="infoToko" class="text-sm text-gray-500">Showing 0 to 0 of 0 entries</div>
-                <div id="paginationToko" class="flex items-center gap-1 bg-white dark:bg-gray-800 border rounded-lg p-1 shadow-sm"></div>
+            <!-- Pagination -->
+            <div class="mt-4" id="paginationLinks">
+                {{ $stores->links() }}
             </div>
         </div>
-
     </div>
 
-    <script src="{{ asset('js/helpers/pagination.js') }}"></script>
+    <!-- Live Search AJAX -->
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const baseUrl = "{{ url('/master/tokos') }}";
-        const csrfToken = "{{ csrf_token() }}";
+        const searchInput = document.getElementById('searchToko');
+        const perPageSelect = document.getElementById('perPage');
 
-        function escapeHtml(s){ if (s === null || s === undefined) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+        function fetchStores() {
+            const query = searchInput.value;
+            const perPage = perPageSelect.value;
 
-        // demo data
-        const tokoData = [];
-        for (let i=2000;i<=2014;i++){
-            tokoData.push({ id: i-1999, kode: String(i), name: `PLANET FASHION STORE ${i}` });
+            fetch(`{{ route('master.stores.index') }}?search=${query}&per_page=${perPage}`, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(res => res.text())
+                .then(html => {
+                    document.getElementById('tableToko').innerHTML = html;
+                });
         }
 
-        const perPageSelect = document.getElementById('perPageToko');
-        const searchBox = document.getElementById('filterTokoSearch');
-        const tbody = document.getElementById('tableBodyToko');
-        const infoEl = document.getElementById('infoToko');
-        const btnSave = document.getElementById('btnSaveToko');
-        const btnCancel = document.getElementById('btnCancelEdit');
-
-        let perPage = parseInt(perPageSelect.value) || 10;
-        let currentPage = 1;
-        let filtered = [];
-        let editingId = null; // null means creating new, number means editing existing
-
-        function resetForm(){
-            document.getElementById('kodeToko').value='';
-            document.getElementById('namaToko').value='';
-            editingId = null;
-            btnSave.textContent = 'Simpan';
-            btnCancel.classList.add('hidden');
-        }
-
-        function applyFilter(){
-            const q = searchBox.value.trim().toLowerCase();
-            filtered = tokoData.filter(t => !q || t.kode.includes(q) || t.name.toLowerCase().includes(q));
-            currentPage = 1; renderTable();
-        }
-
-        perPageSelect.addEventListener('change', ()=>{ perPage = parseInt(perPageSelect.value)||10; currentPage = 1; renderTable(); });
-        searchBox.addEventListener('input', applyFilter);
-
-        tbody.addEventListener('click', function(e){
-            const el = e.target.closest('.toko-edit');
-            if (!el) return;
-            e.preventDefault();
-            const id = parseInt(el.dataset.id);
-            const toko = tokoData.find(t => t.id === id);
-            if (!toko) return;
-            // populate form
-            document.getElementById('kodeToko').value = toko.kode;
-            document.getElementById('namaToko').value = toko.name;
-            editingId = id;
-            btnSave.textContent = 'Update';
-            btnCancel.classList.remove('hidden');
-            document.getElementById('kodeToko').focus();
-        });
-
-        btnCancel.addEventListener('click', function(){ resetForm(); });
-
-        function renderTable(){
-            tbody.innerHTML = '';
-            const total = filtered.length;
-            const start = (currentPage-1)*perPage;
-            const end = Math.min(start + perPage, total);
-            const pageData = filtered.slice(start, end);
-
-            pageData.forEach((row, idx)=>{
-                tbody.innerHTML += `
-                <tr class="border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
-                    <td class="p-3 text-center font-medium">${start+idx+1}</td>
-                    <td class="p-3 text-center">${escapeHtml(row.kode)}</td>
-                    <td class="p-3">${escapeHtml(row.name)}</td>
-                    <td class="p-3 text-center"><a href="#" data-id="${row.id}" class="toko-edit text-blue-600">Edit</a></td>
-                    <td class="p-3 text-center">
-                        <form action="${baseUrl}/${row.id}" method="POST" onsubmit="return confirm('Yakin ingin menghapus toko ini?');">
-                            <input type="hidden" name="_token" value="${csrfToken}">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit" class="text-red-600">Delete</button>
-                        </form>
-                    </td>
-                </tr>`;
-            });
-
-            if (total === 0) infoEl.textContent = 'Showing 0 to 0 of 0 entries';
-            else infoEl.textContent = `Showing ${start+1} to ${end} of ${total} entries`;
-
-            renderPagination({ containerId: 'paginationToko', currentPage, perPage, totalData: total, onChange: (p) => { changePage(p); } });
-        }
-
-        function changePage(p){ const totalPages = Math.ceil(filtered.length / perPage)||1; if (p<1 || p>totalPages) return; currentPage = p; renderTable(); }
-
-        // Save or Update toko (demo)
-        btnSave.addEventListener('click', ()=>{
-            const kode = document.getElementById('kodeToko').value.trim();
-            const name = document.getElementById('namaToko').value.trim();
-            if (!kode || !name) { alert('Mohon isi Kode dan Toko.'); return; }
-
-            if (editingId !== null) {
-                const idx = tokoData.findIndex(t => t.id === editingId);
-                if (idx !== -1) {
-                    tokoData[idx].kode = kode;
-                    tokoData[idx].name = name;
-                    applyFilter();
-                    resetForm();
-                    return;
-                }
-            }
-
-            const maxId = tokoData.reduce((m,r)=>Math.max(m,r.id),0);
-            tokoData.unshift({ id: maxId+1, kode, name });
-            applyFilter();
-            document.getElementById('kodeToko').value=''; document.getElementById('namaToko').value='';
-        });
-
-        // init
-        filtered = tokoData.slice(); renderTable();
-    });
+        searchInput.addEventListener('input', fetchStores);
+        perPageSelect.addEventListener('change', fetchStores);
     </script>
 @endsection

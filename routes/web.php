@@ -47,17 +47,17 @@ Route::prefix('form')->name('forms.')->group(
             ->name('omset.edit');
 
 
-        Route::get('uang-masuk',[UangMasukController::class, 'create'])
+        Route::get('uang-masuk', [UangMasukController::class, 'create'])
             ->name('uang-masuk.create');
-        Route::get('uang-masuk/edit',[UangMasukController::class, 'edit'])
+        Route::get('uang-masuk/edit', [UangMasukController::class, 'edit'])
             ->name('uang-masuk.edit');
 
-        Route::get('uang-keluar',[UangKeluarController::class, 'create'])
+        Route::get('uang-keluar', [UangKeluarController::class, 'create'])
             ->name('uang-keluar.create');
-        Route::get('uang-keluar/edit',[UangKeluarController::class, 'edit'])
+        Route::get('uang-keluar/edit', [UangKeluarController::class, 'edit'])
             ->name('uang-keluar.edit');
     }
-); 
+);
 
 // Rangga
 Route::get('/', function () {
@@ -155,50 +155,46 @@ require __DIR__ . '/auth.php';
 
 // Master routes (temporary stubs) — simplified
 Route::prefix('master')->name('master.')->group(function () {
+
     $resources = [
-        // uri => [viewPrefix, routeNameBase]
-        // 'users' => ['view' => 'master.users', 'name' => 'users'],
-        // 'tokos' => ['view' => 'master.tokos', 'name' => 'toko'], // keep "toko" singular in route names for backward compatibility
-        // 'kategori' => ['view' => 'master.kategori', 'name' => 'kategori'],
-        // 'vendor' => ['view' => 'master.vendor', 'name' => 'vendor'],
+        'users' => [
+            'controller' => 'User',
+            'name' => 'users',
+        ],
+        'stores' => [
+            'controller' => 'Store',
+            'name' => 'stores',
+        ],
+        'vendor' => [
+            'controller' => 'Vendor',
+            'name' => 'vendor',
+        ],
+        'kategori' => [
+            'controller' => 'Kategori',
+            'name' => 'kategori',
+        ],
+        'accounts' => [
+            'controller' => 'Account',
+            'name' => 'accounts',
+        ],
     ];
 
-    foreach ($resources as $uri => $info) {
-        // $view = $info['view'];
-        // $base = $info['name'];
+    Route::prefix('master')->name('master.')->group(function () {
 
-        // Route::get("/{$uri}", function () use ($view) {
-        //     return view("{$view}.index");
-        // })->name("{$base}.index");
+        Route::get('users', [UserController::class, 'index'])->name('users.index');
+        Route::post('users', [UserController::class, 'store'])->name('users.store');
+        Route::get('users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+        Route::patch('users/{id}', [UserController::class, 'update'])->name('users.update');
+        Route::delete('users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+    });
 
-        // Route::get("/{$uri}/create", function () use ($view) {
-        //     return view("{$view}.create");
-        // })->name("{$base}.create");
 
-        // Route::post("/{$uri}", function () use ($base) {
-        //     return redirect()->route("master.{$base}.index")->with('success', "(stub) " . ucfirst($base) . " created.");
-        // })->name("{$base}.store");
-
-        // Route::get("/{$uri}/{id}/edit", function ($id) use ($view) {
-        //     return view("{$view}.edit");
-        // })->name("{$base}.edit");
-
-        // Route::patch("/{$uri}/{id}", function ($id) use ($base) {
-        //     return redirect()->route("master.{$base}.index")->with('success', "(stub) " . ucfirst($base) . " updated: " . $id);
-        // })->name("{$base}.update");
-
-        // Route::delete("/{$uri}/{id}", function ($id) use ($base) {
-        //     return redirect()->route("master.{$base}.index")->with('success', "(stub) " . ucfirst($base) . " deleted: " . $id);
-        // })->name("{$base}.destroy");
-    }
-
-    // Subkategori route (show subkategori for a kategori)
-    Route::get('/kategori/{id}/subkategori', function ($id) {
-        // simple stub: pass kategori object to view; real implementation should use model
-        $kategori = (object)['id' => $id, 'name' => "Kategori " . $id];
+    Route::get('/kategori/{kategori}/subkategori', function ($kategori) {
         return view('master.kategori.subkategori', compact('kategori'));
     })->name('kategori.subkategori');
 });
+
+
 
 
 // Route::get('/export/omset', [ExportController::class, 'exportOmset'])

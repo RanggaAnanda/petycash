@@ -81,6 +81,7 @@
                     ['label' => 'Divisi/Toko', 'route' => 'master.stores.index'],
                     ['label' => 'Kategori', 'route' => 'master.kategori.index'],
                     ['label' => 'Vendor', 'route' => 'master.vendors.index'],
+                    ['label' => 'Account', 'route' => 'master.accounts.index'],
                 ]" />
         </div>
 
@@ -97,26 +98,29 @@
 
     <!-- User Profile -->
     <div class="p-4 border-t border-gray-200 dark:border-gray-700 mt-auto relative">
-    <div id="profileBtn"
-        class="flex items-center px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer">
-        <img src="https://ui-avatars.com/api/?name=Tom+Cook&background=6366f1&color=fff" alt="Rangga Ananda"
-            class="w-10 h-10 rounded-full mr-3">
-        <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium text-gray-900 dark:text-white truncate">Rangga Ananda</p>
-            <p class="text-xs text-gray-500 dark:text-gray-400 truncate">rangga@test</p>
+        <div id="profileBtn"
+            class="flex items-center px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+            <img src="https://ui-avatars.com/api/?name=Tom+Cook&background=6366f1&color=fff" alt="Rangga Ananda"
+                class="w-10 h-10 rounded-full mr-3">
+            <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-gray-900 dark:text-white truncate">Rangga Ananda</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 truncate">rangga@test</p>
+            </div>
+            <svg class="w-5 h-5 text-gray-400 transition-transform duration-200" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
         </div>
-        <svg class="w-5 h-5 text-gray-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-        </svg>
-    </div>
 
-    <!-- Dropdown Menu -->
-    <div id="profileDropdown"
-         class="absolute bottom-full left-0 mb-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden hidden z-50">
-        <a href="{{ route('profile') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Profile</a>
-        <a href="{{ route('login') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-red-400">Logout</a>
+        <!-- Dropdown Menu -->
+        <div id="profileDropdown"
+            class="absolute bottom-full left-0 mb-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden hidden z-50">
+            <a href="{{ route('profile') }}"
+                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Profile</a>
+            <a href="{{ route('login') }}"
+                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-red-400">Logout</a>
+        </div>
     </div>
-</div>
 </aside>
 
 <script>
