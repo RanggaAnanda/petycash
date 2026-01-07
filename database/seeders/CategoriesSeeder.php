@@ -14,15 +14,6 @@ class CategoriesSeeder extends Seeder
     {
         DB::table('kategoris')->insert([
             [
-                'coa_id' => 1,
-                'kode_kategori' => '1001',
-                'name' => 'Kas Toko A',
-                'status' => 'masuk',
-                'has_child' => 'ya',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
                 'coa_id' => 4,
                 'kode_kategori' => '4001',
                 'name' => 'Tramsfer dari keuangan',

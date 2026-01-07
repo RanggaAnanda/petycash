@@ -20,25 +20,10 @@ use App\Http\Controllers\Master\SubKategoriController;
 use App\Http\Controllers\Form\OmsetController as FormOmsetController;
 use App\Http\Controllers\Daftar\OmsetController as DaftarOmsetController;
 
-// Master Resource Routes
-Route::prefix('master')->name('master.')->group(
-    function () {
-        Route::resource('users', UserController::class);
-        Route::resource('stores', StoreController::class);
-        Route::resource('kategori', KategoriController::class);
-        Route::resource('vendors', VendorController::class);
-        Route::resource('accounts', AccountController::class);
-    }
-);
 
-Route::get('/master/kategori/{kategori}/sub', [SubKategoriController::class, 'index'])->name('master.subkategori.index');
-Route::post('/master/kategori/{kategori}/sub', [SubKategoriController::class, 'store'])->name('master.subkategori.store');
-Route::delete('/master/subkategori/{id}', [SubKategoriController::class, 'destroy'])->name('master.subkategori.destroy');
-
-// web.php
-Route::get('/master/kategori/get-next-code/{status}', [KategoriController::class, 'getNextCode']);
-
-// Daftar Resource Routes
+//
+// Daftar 
+//
 Route::prefix('daftar')->name('daftar.')->group(
     function () {
         // routes/web.php
@@ -56,7 +41,9 @@ Route::prefix('daftar')->name('daftar.')->group(
     }
 );
 
-// Form Resource Routes
+//
+// Form 
+//
 Route::prefix('form')->name('forms.')->group(function () {
 
     // Omset
@@ -77,9 +64,45 @@ Route::prefix('form')->name('forms.')->group(function () {
         [UangKeluarController::class, 'getSubKategori']
     )->name('get-sub-kategori');
 });
-
-
 Route::get('/api/subkategori/{kategoriId}', [UangKeluarController::class, 'getSubKategori']);
+
+//
+// Laporan
+//
+Route::prefix('laporan/pettycash')->name('laporan.pettycash.')->group(function () {
+    Route::get('/jurnal', [AkuntansiController::class, 'jurnal'])->name('jurnal');
+    Route::get('/buku-besar', [AkuntansiController::class, 'bukuBesar'])->name('buku-besar');
+    Route::get('/laba-rugi', [AkuntansiController::class, 'labaRugi'])->name('laba-rugi');
+    Route::get('/neraca', [AkuntansiController::class, 'neracaSaldo'])->name('neraca');
+    Route::get('/arus-kas', [AkuntansiController::class, 'arusKas'])->name('arus-kas');
+});
+
+Route::prefix('laporan')->name('laporan.')->group(function(){
+    Route::get('omset',[AkuntansiController::class,'omset'])->name('omset');
+    Route::get('petycash',[AkuntansiController::class,'petycash'])->name('petycash');
+    Route::post('filter', [AkuntansiController::class, 'filter'])->name('filter');
+});
+
+
+
+// Master Resource Routes
+Route::prefix('master')->name('master.')->group(
+    function () {
+        Route::resource('users', UserController::class);
+        Route::resource('stores', StoreController::class);
+        Route::resource('kategori', KategoriController::class);
+        Route::resource('vendors', VendorController::class);
+        Route::resource('accounts', AccountController::class);
+    }
+);
+
+Route::get('/master/kategori/{kategori}/sub', [SubKategoriController::class, 'index'])->name('master.subkategori.index');
+Route::post('/master/kategori/{kategori}/sub', [SubKategoriController::class, 'store'])->name('master.subkategori.store');
+Route::delete('/master/subkategori/{id}', [SubKategoriController::class, 'destroy'])->name('master.subkategori.destroy');
+
+// web.php
+Route::get('/master/kategori/get-next-code/{status}', [KategoriController::class, 'getNextCode']);
+
 
 // Rangga
 Route::get('/', function () {
@@ -94,13 +117,7 @@ Route::get('/profile', function () {
     return view('profile.index');
 })->name('profile');
 
-Route::prefix('laporan/pettycash')->name('laporan.pettycash.')->group(function () {
-    Route::get('/jurnal', [AkuntansiController::class, 'jurnal'])->name('jurnal');
-    Route::get('/buku-besar', [AkuntansiController::class, 'bukuBesar'])->name('buku-besar');
-    Route::get('/laba-rugi', [AkuntansiController::class, 'labaRugi'])->name('laba-rugi');
-    Route::get('/neraca', [AkuntansiController::class, 'neracaSaldo'])->name('neraca');
-    Route::get('/arus-kas', [AkuntansiController::class, 'arusKas'])->name('arus-kas');
-});
+
 
 
 

@@ -2,28 +2,23 @@
 
 namespace App\Http\Controllers\Laporan;
 
+use App\Models\Omset;
+use App\Models\Store;
 use App\Models\Jurnal;
 use App\Models\Account;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Kategori;
-use App\Models\Store;
-use PhpOffice\PhpSpreadsheet\Calculation\Category;
+
+use Illuminate\Support\Facades\DB;
 
 class AkuntansiController extends Controller
 {
-    public function jurnal()
-    {
-        $data = Jurnal::with('account')
-            ->orderBy('tanggal')
-            ->orderBy('id')
-            ->get();
-
-        return view('laporan.pettycash.akuntansi.jurnal', compact('data'));
-    }
+    // Buku Besar
     public function bukuBesar(Request $request)
     {
         $query = Account::with(['jurnals' => function ($q) use ($request) {
+
             // Filter tanggal
             if ($request->waktu && $request->waktu !== 'all') {
                 switch ($request->waktu) {
@@ -32,6 +27,10 @@ class AkuntansiController extends Controller
                         break;
                     case 'kemarin':
                         $q->whereDate('tanggal', now()->subDay());
+                        break;
+                    case 'minggu_lalu':
+                        $q->whereDate('tanggal', '>=', now()->subWeek())
+                            ->whereDate('tanggal', '<=', now());
                         break;
                     case 'bulan_ini':
                         $q->whereMonth('tanggal', now()->month)
@@ -59,7 +58,7 @@ class AkuntansiController extends Controller
                 $q->where('store_id', $request->toko);
             }
 
-            // Filter kategori (jika ada relasi kategori)
+            // Filter kategori
             if ($request->kategori && $request->kategori !== 'all') {
                 $q->whereHas('kategori', fn($q2) => $q2->where('id', $request->kategori));
             }
@@ -67,13 +66,12 @@ class AkuntansiController extends Controller
             $q->orderBy('tanggal')->orderBy('id');
         }])->get();
 
-        // Struktur buku besar sama seperti sebelumnya
         $bukuBesar = [];
         foreach ($query as $account) {
             $saldo = 0;
             $rows = [];
             foreach ($account->jurnals as $jurnal) {
-                $saldo = $account->normal_balance == 'Debit'
+                $saldo = $account->normal_balance === 'Debit'
                     ? $saldo + $jurnal->debit - $jurnal->kredit
                     : $saldo + $jurnal->kredit - $jurnal->debit;
 
@@ -93,96 +91,344 @@ class AkuntansiController extends Controller
             ];
         }
 
-        $tokos = Store::all();      // untuk dropdown
-        $categories = Kategori::all(); // jika ada kategori
+        $tokos = Store::all();
+        $categories = Kategori::all();
 
         return view('laporan.pettycash.akuntansi.buku-besar', compact('bukuBesar', 'tokos', 'categories'));
     }
 
-    // Neraca Saldo
-    public function neracaSaldo()
+    // Neraca Saldo dengan filter
+    public function neracaSaldo(Request $request)
     {
-        $accounts = Account::with('jurnals')->get();
+        $tokos = Store::all();
+        $categories = Kategori::all();
 
+        // Ambil filter dari request
+        $waktu = $request->get('waktu', 'all');
+        $toko = $request->get('toko', 'all');
+        $kategori = $request->get('kategori', 'all');
+        $start_date = $request->get('start_date');
+        $end_date = $request->get('end_date');
+
+        // Query Jurnal
+        $query = Jurnal::query();
+
+        // Filter Toko
+        if ($toko !== 'all') {
+            $query->where('store_id', $toko);
+        }
+
+        // Filter Kategori
+        if ($kategori !== 'all') {
+            $query->where('kategori_id', $kategori);
+        }
+
+        // Filter Waktu
+        switch ($waktu) {
+            case 'hari_ini':
+                $query->whereDate('tanggal', now());
+                break;
+            case 'kemarin':
+                $query->whereDate('tanggal', now()->subDay());
+                break;
+            case 'minggu_lalu':
+                $query->whereBetween('tanggal', [now()->subWeek(), now()]);
+                break;
+            case 'bulan_ini':
+                $query->whereMonth('tanggal', now()->month)
+                    ->whereYear('tanggal', now()->year);
+                break;
+            case 'bulan_lalu':
+                $query->whereMonth('tanggal', now()->subMonth()->month)
+                    ->whereYear('tanggal', now()->subMonth()->year);
+                break;
+            case 'custom':
+                if ($start_date && $end_date) {
+                    $query->whereBetween('tanggal', [$start_date, $end_date]);
+                }
+                break;
+            default:
+                // all time, no filter
+                break;
+        }
+
+        $jurnals = $query->get();
+
+        // Gabungkan per akun
         $neraca = [];
         $totalDebit = 0;
         $totalKredit = 0;
 
-        foreach ($accounts as $account) {
-            $debitTotal = $account->jurnals->sum('debit');
-            $kreditTotal = $account->jurnals->sum('kredit');
-
-            $neraca[] = [
-                'account' => $account,
-                'debit' => $debitTotal,
-                'kredit' => $kreditTotal,
-            ];
-
-            $totalDebit += $debitTotal;
-            $totalKredit += $kreditTotal;
+        foreach (Account::all() as $akun) {
+            $debit = $jurnals->where('account_id', $akun->id)->sum('debit');
+            $kredit = $jurnals->where('account_id', $akun->id)->sum('kredit');
+            if ($debit > 0 || $kredit > 0) {
+                $neraca[] = [
+                    'account' => $akun,
+                    'debit' => $debit,
+                    'kredit' => $kredit
+                ];
+                $totalDebit += $debit;
+                $totalKredit += $kredit;
+            }
         }
 
-        $isBalanced = ($totalDebit == $totalKredit);
-
-        return view('laporan.pettycash.akuntansi.neraca', compact(
-            'neraca',
-            'totalDebit',
-            'totalKredit',
-            'isBalanced'
-        ));
+        return view('laporan.pettycash.akuntansi.neraca', [
+            'neraca' => $neraca,
+            'totalDebit' => $totalDebit,
+            'totalKredit' => $totalKredit,
+            'isBalanced' => $totalDebit == $totalKredit,
+            'tokos' => $tokos,
+            'categories' => $categories
+        ]);
     }
 
-    public function labaRugi()
+    // Laba Rugi dengan filter
+    public function labaRugi(Request $request)
     {
-        $pendapatan = Account::where('jenis_akun', 'Pendapatan')->with('jurnals')->get();
-        $totalPendapatan = 0;
-        $pendapatan_totals = [];
-        foreach ($pendapatan as $akun) {
-            $total = $akun->jurnals->sum('kredit') - $akun->jurnals->sum('debit');
-            $pendapatan_totals[] = [
-                'akun' => $akun,
-                'total' => $total,
-            ];
-            $totalPendapatan += $total;
+        $tokos = Store::all();
+        $categories = Kategori::all();
+
+        $waktu = $request->get('waktu', 'all');
+        $toko = $request->get('toko', 'all');
+        $kategori = $request->get('kategori', 'all');
+        $start_date = $request->get('start_date');
+        $end_date = $request->get('end_date');
+
+        $query = Jurnal::query();
+
+        // Filter toko
+        if ($toko !== 'all') {
+            $query->where('store_id', $toko);
         }
 
-        $beban = Account::where('jenis_akun', 'Beban')->with('jurnals')->get();
-        $totalBeban = 0;
+        // Filter kategori
+        if ($kategori !== 'all') {
+            $query->where('kategori_id', $kategori);
+        }
+
+        // Filter waktu
+        switch ($waktu) {
+            case 'hari_ini':
+                $query->whereDate('tanggal', now());
+                break;
+            case 'kemarin':
+                $query->whereDate('tanggal', now()->subDay());
+                break;
+            case 'minggu_lalu':
+                $query->whereBetween('tanggal', [now()->subWeek(), now()]);
+                break;
+            case 'bulan_ini':
+                $query->whereMonth('tanggal', now()->month)
+                    ->whereYear('tanggal', now()->year);
+                break;
+            case 'bulan_lalu':
+                $query->whereMonth('tanggal', now()->subMonth()->month)
+                    ->whereYear('tanggal', now()->subMonth()->year);
+                break;
+            case 'custom':
+                if ($start_date && $end_date) {
+                    $query->whereBetween('tanggal', [$start_date, $end_date]);
+                }
+                break;
+            default:
+                break;
+        }
+
+        $jurnals = $query->get();
+
+        // Pendapatan dan Beban
+        $pendapatan_totals = [];
         $beban_totals = [];
-        foreach ($beban as $akun) {
-            $total = $akun->jurnals->sum('debit') - $akun->jurnals->sum('kredit');
-            $beban_totals[] = [
-                'akun' => $akun,
-                'total' => $total,
-            ];
-            $totalBeban += $total;
+        $totalPendapatan = 0;
+        $totalBeban = 0;
+
+        $pendapatan_accounts = Account::where('jenis_akun', 'Pendapatan')->get();
+        $beban_accounts = Account::where('jenis_akun', 'Beban')->get();
+
+        foreach ($pendapatan_accounts as $akun) {
+            $total = $jurnals->where('account_id', $akun->id)->sum('kredit')
+                - $jurnals->where('account_id', $akun->id)->sum('debit');
+            if ($total != 0) {
+                $pendapatan_totals[] = ['akun' => $akun, 'total' => $total];
+                $totalPendapatan += $total;
+            }
+        }
+
+        foreach ($beban_accounts as $akun) {
+            $total = $jurnals->where('account_id', $akun->id)->sum('debit')
+                - $jurnals->where('account_id', $akun->id)->sum('kredit');
+            if ($total != 0) {
+                $beban_totals[] = ['akun' => $akun, 'total' => $total];
+                $totalBeban += $total;
+            }
         }
 
         $laba_bersih = $totalPendapatan - $totalBeban;
 
         return view('laporan.pettycash.akuntansi.laba-rugi', compact(
             'pendapatan_totals',
-            'totalPendapatan',
             'beban_totals',
+            'totalPendapatan',
             'totalBeban',
-            'laba_bersih'
+            'laba_bersih',
+            'tokos',
+            'categories'
         ));
     }
 
-    public function arusKas()
+
+    public function omset(Request $request)
     {
-        $kasMasuk = Jurnal::whereHas(
-            'account',
-            fn($q) =>
-            $q->where('kode_akun', 'like', '100%')
-        )->sum('debit');
+        $tokos = Store::orderBy('name')->get();
 
-        $kasKeluar = Jurnal::whereHas(
-            'account',
-            fn($q) =>
-            $q->where('kode_akun', 'like', '100%')
-        )->sum('kredit');
+        $query = Omset::with('store');
 
-        return view('laporan.pettycash.akuntansi.arus-kas', compact('kasMasuk', 'kasKeluar'));
+        if ($request->filled('toko') && $request->toko !== 'all') {
+            $query->where('store_id', $request->toko);
+        }
+
+        if ($request->filled('waktu')) {
+            match ($request->waktu) {
+                'hari_ini'   => $query->whereDate('tanggal', now()),
+                'minggu_ini' => $query->whereBetween('tanggal', [
+                    now()->startOfWeek(),
+                    now()->endOfWeek(),
+                ]),
+                'bulan_ini'  => $query->whereMonth('tanggal', now()->month),
+                default      => null,
+            };
+        }
+
+        $items = $query
+            ->orderBy('tanggal', 'desc')
+            ->get();
+
+        return view('laporan.omset', compact('items', 'tokos'));
+    }
+
+    public function petycash()
+    {
+        $saldoAwal = 5000000;
+
+        // Ambil session
+        $sessionFilter = session('petycash_filter', []);
+        // Gabungkan session dengan default agar key yang kurang otomatis terisi
+        $filter = array_merge([
+            'waktu' => 'all',
+            'toko' => 'all',
+            'kategori' => 'all',
+            'tipe' => 'all', // Pastikan ini ada
+            'start_date' => null,
+            'end_date' => null,
+        ], $sessionFilter);
+
+        // Sekarang kamu aman menggunakan $filter['tipe'] tanpa takut undefined
+        // ... sisa kode query kamu ...
+
+
+        // 1. Query Pemasukan
+        $masuk = DB::table('pemasukans')
+            ->select('id', 'tanggal', 'kategori_id', DB::raw('NULL as sub_kategori_id'), 'nominal', 'keterangan', 'user_id', DB::raw("'masuk' as tipe"));
+
+        // 2. Query Pengeluaran
+        $keluar = DB::table('pengeluarans')
+            ->select('id', 'tanggal', 'kategori_id', 'sub_kategori_id', 'nominal', 'keterangan', 'user_id', DB::raw("'keluar' as tipe"));
+
+        // Gunakan ?? 'all' untuk mengantisipasi jika key 'tipe' belum ada di session lama
+        if ($filter['tipe'] === 'masuk') {
+            $keluar->whereRaw('1 = 0');
+        } elseif ($filter['tipe'] === 'keluar') {
+            $masuk->whereRaw('1 = 0');
+        }
+
+        // --- APPLY FILTER ---
+        $applyFilter = function ($query) use ($filter) {
+
+            if ($filter['toko'] !== 'all') {
+                $query->whereExists(function ($q) use ($filter) {
+                    $q->select(DB::raw(1))
+                        ->from('users')
+                        ->whereColumn('users.id', 'user_id')
+                        ->where('store_id', $filter['toko']);
+                });
+            }
+            if ($filter['kategori'] !== 'all') {
+                $query->where('kategori_id', $filter['kategori']);
+            }
+
+            // Filter Waktu
+            switch ($filter['waktu']) {
+                case 'hari_ini':
+                    $query->whereDate('tanggal', today());
+                    break;
+                case 'kemarin':
+                    $query->whereDate('tanggal', today()->subDay());
+                    break;
+                case 'minggu_lalu':
+                    $query->whereBetween('tanggal', [now()->subDays(7), now()]);
+                    break;
+                case 'bulan_ini':
+                    $query->whereMonth('tanggal', now()->month)->whereYear('tanggal', now()->year);
+                    break;
+                case 'custom':
+                    if ($filter['start_date'] && $filter['end_date']) {
+                        $query->whereBetween('tanggal', [$filter['start_date'], $filter['end_date']]);
+                    }
+                    break;
+            }
+        };
+
+        $applyFilter($masuk);
+        $applyFilter($keluar);
+
+        // 3. Union & Sort
+        // Kita gunakan Get dulu untuk hitung saldo manual, baru kita manual paginate jika data sangat besar
+        // Namun untuk Petty Cash, gabungan union ini kita ambil urut Tanggal Terlama (ASC) agar saldo running benar
+        $gabungan = $masuk->union($keluar)->orderBy('tanggal', 'asc')->get();
+
+        // 4. Hitung Running Saldo secara manual dalam koleksi
+        $currentSaldo = $saldoAwal;
+        $gabungan = $gabungan->map(function ($item) use (&$currentSaldo) {
+            if ($item->tipe == 'masuk') {
+                $currentSaldo += $item->nominal;
+            } else {
+                $currentSaldo -= $item->nominal;
+            }
+            $item->saldo_berjalan = $currentSaldo;
+
+            // 1. Ambil Nama Kategori (Langsung ambil string namanya)
+            $item->kategori_name = \App\Models\Kategori::where('id', $item->kategori_id)->value('name') ?? 'Tanpa Kategori';
+
+            // 2. Ambil Nama Sub Kategori
+            if ($item->sub_kategori_id) {
+                $item->sub_name = \App\Models\SubKategori::where('id', $item->sub_kategori_id)->value('name') ?? '-';
+            } else {
+                $item->sub_name = '-';
+            }
+
+            // 3. Ambil Nama Toko dari User
+            $user = \App\Models\User::with('store')->find($item->user_id);
+            $item->store_name = ($user && $user->store) ? $user->store->name : 'Pusat';
+
+            return $item;
+        });
+
+        // Balik urutan agar yang terbaru di atas untuk tampilan tabel
+        $transaksiTampil = $gabungan->reverse();
+
+        return view('laporan.petycash', [
+            'transaksi' => $transaksiTampil,
+            'saldoAwal' => $saldoAwal,
+            'categories' => Kategori::all(),
+            'tokos' => Store::all(),
+            'filter' => $filter,
+        ]);
+    }
+
+    public function filter(Request $request)
+    {
+        session(['petycash_filter' => $request->only(['waktu', 'toko', 'kategori', 'tipe', 'start_date', 'end_date'])]);
+        return redirect()->route('laporan.petycash');
     }
 }

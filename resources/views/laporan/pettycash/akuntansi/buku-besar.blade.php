@@ -120,7 +120,15 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                            @php
+                                $totalDebit = 0;
+                                $totalKredit = 0;
+                            @endphp
                             @foreach ($bb['rows'] as $row)
+                                @php
+                                    $totalDebit += $row['debit'];
+                                    $totalKredit += $row['kredit'];
+                                @endphp
                                 <tr class="hover:bg-gray-50/50 dark:hover:bg-gray-900/50 transition-colors">
                                     <td class="p-3">{{ $row['tanggal'] }}</td>
                                     <td class="p-3">{{ $row['no_bukti'] }}</td>
@@ -134,6 +142,16 @@
                                 </tr>
                             @endforeach
                         </tbody>
+                        <tfoot class="bg-gray-100 dark:bg-gray-700/50 font-bold">
+                            <tr>
+                                <td class="p-3 text-right" colspan="3">TOTAL</td>
+                                <td class="p-3 text-right text-green-700">{{ number_format($totalDebit, 2) }}</td>
+                                <td class="p-3 text-right text-red-700">{{ number_format($totalKredit, 2) }}</td>
+                                <td class="p-3 text-right text-gray-800 dark:text-gray-200">
+                                    {{ number_format($totalDebit - $totalKredit, 2) }}
+                                </td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>

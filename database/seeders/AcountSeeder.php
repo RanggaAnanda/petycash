@@ -14,7 +14,7 @@ class AcountSeeder extends Seeder
     {
         DB::table('accounts')->insert([
             [
-                'kode_akun' => '10',
+                'kode_akun' => '1001',
                 'jenis_akun' => 'Aset',
                 'normal_balance' => 'Debit',
                 'created_at' => now(),

@@ -34,4 +34,8 @@ class Pengeluaran extends Model
         return $this->hasMany(Jurnal::class, 'ref_id')
             ->where('ref_type', 'pengeluaran');
     }
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
+    }
 }

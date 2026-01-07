@@ -20,7 +20,9 @@ return new class extends Migration
             $table->decimal('nominal', 15, 2);
             $table->text('keterangan')->nullable();
             $table->foreignId('user_id')->constrained('users'); // siapa yang input
+            $table->foreignId('store_id')->constrained('stores');
             $table->timestamps();
+
         });
     }
 

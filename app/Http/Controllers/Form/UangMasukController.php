@@ -13,39 +13,40 @@ use Illuminate\Support\Facades\Log;
 
 class UangMasukController extends Controller
 {
-    /**
-     * FORM CREATE
-     */
     public function create()
     {
-        $kategoris = Kategori::with('subKategoris')
-            ->where('status', 'masuk')
-            ->get();
-
-        return view('forms.uang-masuk.create', compact('kategoris'));
+        return view('forms.uang-masuk.create', [
+            'kategoris' => Kategori::with('subKategoris')
+                ->where('status', 'masuk')->get()
+        ]);
     }
 
-    /**
-     * STORE PEMASUKAN + DOUBLE ENTRY
-     */
+    public function edit($id)
+    {
+        return view('forms.uang-masuk.edit', [
+            'item' => Pemasukan::findOrFail($id),
+            'kategoris' => Kategori::with('subKategoris')
+                ->where('status', 'masuk')->get()
+        ]);
+    }
+
     public function store(Request $request)
     {
         $data = $request->validate([
             'tanggal'         => 'required|date',
-            'kategori_id'     => 'required|exists:kategoris,id',
-            'sub_kategori_id' => 'nullable|exists:sub_kategoris,id',
-            'nominal'         => 'required|string',
-            'keterangan'      => 'nullable|string',
+            'kategori_id'     => 'required',
+            'sub_kategori_id' => 'nullable',
+            'nominal'         => 'required',
+            'keterangan'      => 'nullable',
         ]);
 
-        $nominal = (int) str_replace('.', '', $data['nominal']);
+        $nominal = str_replace('.', '', $data['nominal']);
+        Log::info('Store Uang Masuk: validasi selesai', ['data' => $data, 'nominal' => $nominal]);
 
         try {
             DB::transaction(function () use ($data, $nominal) {
 
-                // =====================
-                // 1. SIMPAN PEMASUKAN
-                // =====================
+                // 1. Buat Pemasukan
                 $pemasukan = Pemasukan::create([
                     'tanggal'         => $data['tanggal'],
                     'kategori_id'     => $data['kategori_id'],
@@ -55,96 +56,81 @@ class UangMasukController extends Controller
                     'user_id'         => 1,
                     'store_id'        => 1,
                 ]);
+                Log::info('Pemasukan berhasil dibuat', ['pemasukan_id' => $pemasukan->id]);
 
-                // =====================
-                // 2. AMBIL AKUN
-                // =====================
-                $kategori = Kategori::with('coa', 'subKategoris.coa')
-                    ->findOrFail($data['kategori_id']);
-
+                // 2. Ambil Kategori + Subkategori + Account Kas
+                $kategori = Kategori::with('coa', 'subKategoris.coa')->findOrFail($data['kategori_id']);
+                // Tambahkan default null untuk sub_kategori_id
                 $subKategoriId = $data['sub_kategori_id'] ?? null;
 
+                // Ambil sub kategori
                 $sub = $subKategoriId
                     ? $kategori->subKategoris->where('id', $subKategoriId)->first()
                     : null;
-
-
                 $akunKas = Account::where('kode_akun', '1001')->firstOrFail();
 
-                // PRIORITAS SUB KATEGORI
-                $akunPendapatan = $sub && $sub->coa
-                    ? $sub->coa
-                    : $kategori->coa;
+                Log::info('Kategori dan Subkategori', [
+                    'kategori_id' => $kategori->id,
+                    'sub_id' => $sub?->id ?? null,
+                    'akunKas_id' => $akunKas->id
+                ]);
 
-                // =====================
-                // 3. JURNAL DOUBLE ENTRY
-                // =====================
+                // 3. Tentukan akun pendapatan
+                $akunPendapatan = $sub && $sub->coa ? $sub->coa : $kategori->coa;
+                $noBukti = 'PM-' . str_pad($pemasukan->id, 6, '0', STR_PAD_LEFT);
+
+                Log::info('Akun Pendapatan & No Bukti', [
+                    'akunPendapatan' => $akunPendapatan->id ?? null,
+                    'noBukti' => $noBukti
+                ]);
+
+                // 4. Buat jurnal double entry
                 JournalHelper::doubleEntry(
                     $data['tanggal'],
-                    'PM-' . str_pad($pemasukan->id, 6, '0', STR_PAD_LEFT),
+                    $noBukti,
                     'pemasukan',
                     $pemasukan->id,
-                    $akunKas,            // DEBIT
-                    $akunPendapatan,     // KREDIT
+                    $akunKas,
+                    $akunPendapatan,
                     $nominal,
                     'Pemasukan - ' . $kategori->name . ($sub ? ' / ' . $sub->name : ''),
-                    1
+                    1,
+                    $data['kategori_id'],
+                    $data['sub_kategori_id'] ?? null
                 );
+
+                Log::info('Jurnal berhasil dibuat untuk Pemasukan', ['pemasukan_id' => $pemasukan->id]);
             });
         } catch (\Throwable $e) {
-            Log::error('UangMasuk store failed', [
-                'message' => $e->getMessage(),
+            Log::error('Store Uang Masuk Gagal', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
             ]);
 
-            return back()->with('error', $e->getMessage());
+            return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
 
         return redirect('daftar/petycash')
             ->with('success', 'Uang masuk berhasil disimpan');
     }
 
-    /**
-     * FORM EDIT
-     */
-    public function edit($id)
-    {
-        $item = Pemasukan::findOrFail($id);
-
-        $kategoris = Kategori::where('status', 'masuk')->get();
-
-        $subKategoris = $item->kategori->subKategorisMasuk;
-
-
-        return view(
-            'forms.uang-masuk.edit',
-            compact('item', 'kategoris', 'subKategoris')
-        );
-    }
-
-
-    /**
-     * UPDATE PEMASUKAN + UPDATE JURNAL
-     */
     public function update(Request $request, $id)
     {
-        $item = Pemasukan::findOrFail($id);
+        $pemasukan = Pemasukan::findOrFail($id);
 
         $data = $request->validate([
             'tanggal'         => 'required|date',
-            'kategori_id'     => 'required|exists:kategoris,id',
-            'sub_kategori_id' => 'nullable|exists:sub_kategoris,id',
-            'nominal'         => 'required|string',
-            'keterangan'      => 'nullable|string',
+            'kategori_id'     => 'required',
+            'sub_kategori_id' => 'nullable',
+            'nominal'         => 'required',
+            'keterangan'      => 'nullable',
         ]);
 
-        $nominal = (int) str_replace('.', '', $data['nominal']);
+        $nominal = str_replace('.', '', $data['nominal']);
 
-        DB::transaction(function () use ($item, $data, $nominal) {
+        DB::transaction(function () use ($data, $nominal, $pemasukan) {
 
-            // =====================
-            // UPDATE PEMASUKAN
-            // =====================
-            $item->update([
+            $pemasukan->update([
                 'tanggal'         => $data['tanggal'],
                 'kategori_id'     => $data['kategori_id'],
                 'sub_kategori_id' => $data['sub_kategori_id'] ?? null,
@@ -152,57 +138,42 @@ class UangMasukController extends Controller
                 'keterangan'      => $data['keterangan'] ?? null,
             ]);
 
-            // =====================
-            // AMBIL AKUN
-            // =====================
-            $kategori = Kategori::with('coa', 'subKategoris.coa')
-                ->findOrFail($data['kategori_id']);
-
+            $kategori = Kategori::with('coa', 'subKategoris.coa')->findOrFail($data['kategori_id']);
+            // Tambahkan default null untuk sub_kategori_id
             $subKategoriId = $data['sub_kategori_id'] ?? null;
 
+            // Ambil sub kategori
             $sub = $subKategoriId
                 ? $kategori->subKategoris->where('id', $subKategoriId)->first()
                 : null;
-
-
             $akunKas = Account::where('kode_akun', '1001')->firstOrFail();
+            $akunPendapatan = $sub && $sub->coa ? $sub->coa : $kategori->coa;
 
-            $akunPendapatan = $sub && $sub->coa
-                ? $sub->coa
-                : $kategori->coa;
+            $pemasukan->jurnals()->delete();
 
-            // =====================
-            // UPDATE JURNAL
-            // =====================
-            if ($item->jurnals()->exists()) {
-                $item->jurnals()->delete();
-            }
-
-
+            $noBukti = 'PM-' . str_pad($pemasukan->id, 6, '0', STR_PAD_LEFT);
             JournalHelper::doubleEntry(
                 $data['tanggal'],
-                'PM-' . str_pad($item->id, 6, '0', STR_PAD_LEFT),
+                $noBukti,
                 'pemasukan',
-                $item->id,
+                $pemasukan->id,
                 $akunKas,
                 $akunPendapatan,
                 $nominal,
                 'Pemasukan - ' . $kategori->name . ($sub ? ' / ' . $sub->name : ''),
-                1
+                1,
+                $data['kategori_id'],
+                $data['sub_kategori_id'] ?? null
             );
         });
 
-        return redirect('/daftar/petycash')
+        return redirect('daftar/petycash')
             ->with('success', 'Uang masuk berhasil diperbarui');
     }
 
-    /**
-     * AJAX SUB KATEGORI
-     */
     public function getSubKategori($kategoriId)
     {
-        return response()->json(
-            \App\Models\SubKategori::where('kategori_id', $kategoriId)->get()
-        );
+        $subKats = \App\Models\SubKategori::where('kategori_id', $kategoriId)->get();
+        return response()->json($subKats);
     }
 }

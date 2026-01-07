@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             CategoriesSeeder::class,
             SubcategoriesSeeder::class,
             VendorSeeder::class,
+            TransactionSeeder::class,
         ]);
     }
 }
