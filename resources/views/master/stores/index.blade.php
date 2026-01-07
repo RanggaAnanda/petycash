@@ -11,7 +11,7 @@
             <h3 class="font-semibold mb-4">{{ isset($editStore) ? 'Edit Toko' : 'Form Toko' }}</h3>
 
             @if (session('success'))
-                <div class="mb-3 text-green-600 text-sm">{{ session('success') }}</div>
+                <div class="mb-3 text-green-600 text-lg">{{ session('success') }}</div>
             @endif
 
             <form action="{{ isset($editStore) ? route('master.stores.update', $editStore) : route('master.stores.store') }}"
@@ -24,22 +24,22 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <x-input-label name="Code" />
-                        <x-input name="code" value="{{ old('code', $editStore->code ?? '') }}" class="text-sm" required />
+                        <x-input name="code" value="{{ old('code', $editStore->code ?? '') }}" class="text-lg" required />
                     </div>
                     <div>
                         <x-input-label name="Nama Toko" />
-                        <x-input name="name" value="{{ old('name', $editStore->name ?? '') }}" class="text-sm"
+                        <x-input name="name" value="{{ old('name', $editStore->name ?? '') }}" class="text-lg"
                             required />
                     </div>
                 </div>
 
                 <div class="mt-4">
-                    <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm">
+                    <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-lg">
                         {{ isset($editStore) ? 'Update' : 'Simpan' }}
                     </button>
                     @if (isset($editStore))
                         <a href="{{ route('master.stores.index') }}"
-                            class="ml-2 px-3 py-2 bg-gray-200 rounded text-sm">Batal</a>
+                            class="ml-2 px-3 py-2 bg-gray-200 rounded text-lg">Batal</a>
                     @endif
                 </div>
             </form>
@@ -51,17 +51,17 @@
                 <h3 class="font-semibold">List Toko</h3>
 
                 <div class="flex items-center gap-3 mt-4">
-                    <select id="perPage" class="border rounded px-2 py-1 text-sm">
+                    <select id="perPage" class="border rounded px-2 py-1 text-lg">
                         @foreach ([10, 25, 50] as $size)
                             <option value="{{ $size }}" {{ request('per_page', 10) == $size ? 'selected' : '' }}>
                                 {{ $size }}
                             </option>
                         @endforeach
                     </select>
-                    <span class="text-sm text-gray-500">entries per page</span>
+                    <span class="text-lg text-gray-500">entries per page</span>
 
                     <input id="searchToko" type="text" placeholder="Cari code atau nama..."
-                        class="ml-4 px-3 py-2 rounded border text-sm" value="{{ request('search') }}" />
+                        class="ml-4 px-3 py-2 rounded border text-lg" value="{{ request('search') }}" />
                 </div>
             </div>
 
@@ -78,15 +78,15 @@
                     </thead>
                     <tbody id="tableToko">
                         @forelse($stores as $i => $store)
-                            <tr class="border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
-                                <td class="p-3 text-center text-sm">{{ $stores->firstItem() + $i }}</td>
-                                <td class="p-3 text-center text-sm">{{ $store->code }}</td>
-                                <td class="p-3 text-center text-sm">{{ $store->name }}</td>
-                                <td class="p-3 text-center text-sm">
+                            <tr class="border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition text-lg">
+                                <td class="p-3 text-center">{{ $stores->firstItem() + $i }}</td>
+                                <td class="p-3 text-center">{{ $store->code }}</td>
+                                <td class="p-3 text-center">{{ $store->name }}</td>
+                                <td class="p-3 text-center">
                                     <a href="{{ route('master.stores.index', ['edit' => $store->id]) }}"
                                         class="text-blue-600 hover:underline">Edit</a>
                                 </td>
-                                <td class="p-3 text-center text-sm">
+                                <td class="p-3 text-center">
                                     <form method="POST" action="{{ route('master.stores.destroy', $store) }}"
                                         onsubmit="return confirm('Hapus data?')">
                                         @csrf
@@ -97,7 +97,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="p-4 text-center text-gray-500 text-sm">Data belum ada</td>
+                                <td colspan="5" class="p-4 text-center text-gray-500 text-lg">Data belum ada</td>
                             </tr>
                         @endforelse
                     </tbody>

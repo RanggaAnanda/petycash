@@ -2,64 +2,39 @@
 
 namespace App\Http\Controllers\Daftar;
 
-use App\Http\Controllers\Controller;
+use App\Models\Omset;
+use App\Models\Store;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class OmsetController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        return view('daftar.omset.index');
+        $tokos = Store::orderBy('name')->get();
+
+        $query = Omset::with('store');
+
+        if ($request->filled('toko') && $request->toko !== 'all') {
+            $query->where('store_id', $request->toko);
+        }
+
+        if ($request->filled('waktu')) {
+            match ($request->waktu) {
+                'hari_ini'   => $query->whereDate('tanggal', now()),
+                'minggu_ini' => $query->whereBetween('tanggal', [
+                    now()->startOfWeek(),
+                    now()->endOfWeek(),
+                ]),
+                'bulan_ini'  => $query->whereMonth('tanggal', now()->month),
+                default      => null,
+            };
+        }
+
+        $items = $query
+            ->orderBy('tanggal', 'desc')
+            ->get();
+
+        return view('daftar.omset.index', compact('items', 'tokos'));
     }
-
-    // /**
-    //  * Show the form for creating a new resource.
-    //  */
-    // public function create()
-    // {
-    //     return view ('forms.omset.create');
-    // }
-
-        // /**
-        //  * Store a newly created resource in storage.
-        //  */
-        // public function store(Request $request)
-        // {
-        //     //
-        // }
-
-        // /**
-        //  * Display the specified resource.
-        //  */
-        // public function show(string $id)
-        // {
-        //     //
-        // }
-
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  */
-    public function edit()
-    {
-        return view('forms.omset.edit');
-    }
-
-    // /**
-    //  * Update the specified resource in storage.
-    //  */
-    // public function update(Request $request, string $id)
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Remove the specified resource from storage.
-    //  */
-    // public function destroy(string $id)
-    // {
-    //     //
-    // }
 }

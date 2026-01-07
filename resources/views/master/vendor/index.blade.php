@@ -14,7 +14,7 @@
         <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow border">
             <h3 class="font-semibold mb-4" id="formTitle">Form Vendor</h3>
 
-            <form id="vendorForm" action="{{ route('master.vendor.store') }}" method="POST" class="space-y-4">
+            <form id="vendorForm" action="{{ route('master.vendors.store') }}" method="POST" class="space-y-4">
                 @csrf
                 <input type="hidden" name="vendor_id" id="vendor_id">
 
@@ -59,8 +59,8 @@
                     <tr>
                         <x-th class="w-12 text-center">No</x-th>
                         <x-th class="text-center">KODE</x-th>
-                        <x-th class="text-left">KATEGORI</x-th>
                         <x-th class="text-left">VENDOR</x-th>
+                        <x-th class="text-left">KATEGORI</x-th>
                         <x-th class="w-20 text-center">EDIT</x-th>
                         <x-th class="w-20 text-center">DELETE</x-th>
                     </tr>
@@ -70,8 +70,8 @@
                         <tr class="border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
                             <td class="p-3 text-center font-medium">{{ $idx + 1 }}</td>
                             <td class="p-3 text-center">{{ $vendor->kode }}</td>
-                            <td class="p-3">{{ $vendor->kategori->name ?? '-' }}</td>
                             <td class="p-3">{{ $vendor->name }}</td>
+                            <td class="p-3">{{ $vendor->kategori->name ?? '-' }}</td>
                             <td class="p-3 text-center">
                                 <button type="button" class="vendor-edit text-blue-600" data-id="{{ $vendor->id }}"
                                     data-kode="{{ $vendor->kode }}" data-nama="{{ $vendor->name }}"
@@ -80,7 +80,7 @@
                                 </button>
                             </td>
                             <td class="p-3 text-center">
-                                <form action="{{ route('master.vendor.destroy', $vendor->id) }}" method="POST"
+                                <form action="{{ route('master.vendors.destroy', $vendor->id) }}" method="POST"
                                     onsubmit="return confirm('Yakin ingin menghapus vendor ini?')">
                                     @csrf
                                     @method('DELETE')
@@ -136,7 +136,7 @@
                 kodeInput.value = '';
                 namaInput.value = '';
                 kategoriInput.value = '';
-                form.action = "{{ route('master.vendor.store') }}";
+                form.action = "{{ route('master.vendors.store') }}";
                 btnSave.textContent = 'Simpan';
                 btnCancel.classList.add('hidden');
                 formTitle.textContent = 'Form Vendor';

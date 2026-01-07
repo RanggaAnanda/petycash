@@ -52,7 +52,7 @@
                     </thead>
                     <tbody>
                         @forelse ($users as $i => $user)
-                            <tr class="border-b hover:bg-gray-100">
+                            <tr class="border-b hover:bg-gray-100 text-lg">
                                 <td class="p-3 text-center">
                                     {{ $users->firstItem() + $i }}
                                 </td>

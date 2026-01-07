@@ -32,11 +32,6 @@
                     </div>
 
                     <div>
-                        <x-input-label name="Nama Akun" />
-                        <x-input name="nama_akun" value="{{ old('nama_akun', $editAccount->nama_akun ?? '') }}" />
-                    </div>
-
-                    <div>
                         <x-input-label name="Jenis Akun" />
                         <x-dropdown name="jenis_akun" :options="[
                             'Aset' => 'Aset',
@@ -50,11 +45,6 @@
                     <div>
                         <x-input-label name="Normal Balance" />
                         <x-dropdown name="normal_balance" :options="['Debit' => 'Debit', 'Kredit' => 'Kredit']" :selected="$editAccount->normal_balance ?? null" />
-                    </div>
-
-                    <div>
-                        <x-input-label name="Parent Akun (Opsional)" />
-                        <x-dropdown name="parent_id" :options="['' => 'Pilih Parent'] + App\Models\Account::pluck('nama_akun', 'id')->toArray()" :selected="$editAccount->parent_id ?? null" />
                     </div>
                 </div>
 
@@ -78,7 +68,6 @@
                     <tr>
                         <x-th class="w-12 text-center">No</x-th>
                         <x-th>Kode Akun</x-th>
-                        <x-th>Nama Akun</x-th>
                         <x-th>Jenis Akun</x-th>
                         <x-th>Normal</x-th>
                         <x-th class="w-32 text-center">Actions</x-th>
@@ -89,7 +78,6 @@
                         <tr>
                             <td class="text-center">{{ $idx + 1 }}</td>
                             <td class="whitespace-nowrap">{{ $acc->kode_akun }}</td>
-                            <td class="whitespace-nowrap">{{ $acc->nama_akun }}</td>
                             <td class="whitespace-nowrap">{{ $acc->jenis_akun }}</td>
                             <td class="whitespace-nowrap">{{ $acc->normal_balance }}</td>
                             <td class="text-center">

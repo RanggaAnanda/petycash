@@ -2,18 +2,25 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Kategori extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'coa_id',
+        'kode_kategori',
+        'name',
+        'status',
+        'has_child'
+    ];
 
-    protected $fillable = ['name'];
-
-    // Relasi ke vendor
-    public function vendors()
+    public function subKategoris()
     {
-        return $this->hasMany(Vendor::class);
+        return $this->hasMany(SubKategori::class);
+    }
+    public function coa()
+    {
+        return $this->belongsTo(Account::class, 'coa_id');
     }
 }

@@ -33,7 +33,7 @@ class VendorController extends Controller
 
         Vendor::create($request->only('kode', 'name', 'kategori_id'));
 
-        return redirect()->route('master.vendor.index')->with('success', 'Vendor berhasil ditambahkan');
+        return redirect()->route('master.vendors.index')->with('success', 'Vendor berhasil ditambahkan');
     }
 
     /**

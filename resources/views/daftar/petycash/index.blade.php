@@ -1,305 +1,256 @@
 @extends('layouts.app')
 
-@section('title', 'Daftar Petty Cash')
-@section('page-title', 'Daftar Petty Cash')
-
 @section('content')
-    <div class="space-y-6">
-
-        <div>
-            <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100 ">
-                Daftar Petty Cash
-            </h2>
+    <div class="p-6 space-y-6">
+        {{-- Header --}}
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white uppercase">Daftar Petty Cash</h2>
+            {{-- <div class="flex gap-2">
+                <a href="{{ route('forms.uang-masuk.create') }}"
+                    class="px-6 py-3 bg-green-600 text-white rounded-xl font-bold hover:bg-green-700 transition shadow-lg">
+                    + UANG MASUK
+                </a>
+                <a href="{{ route('forms.uang-keluar.create') }}"
+                    class="px-6 py-3 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700 transition shadow-lg">
+                    - UANG KELUAR
+                </a>
+            </div> --}}
         </div>
 
-        <!-- FILTER -->
-        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow border">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {{-- Filter Panel --}}
 
-                <!-- Rentang Waktu -->
-                <div>
-                    <x-input-label name="Rentang Waktu" class="mb-1 text-sm" />
-                    <x-dropdown name="filter" id="filterTime" class="w-full" :options="[
-                        'all' => 'Semua',
-                        'today' => 'Hari Ini',
-                        'week' => '1 Minggu Terakhir',
-                        'month' => '1 Bulan Terakhir',
-                    ]" />
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700">
+
+            <form action="{{ route('daftar.petycash.filter') }}" method="POST">
+
+                @csrf
+
+
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+
+
+
+                    {{-- RENTANG WAKTU --}}
+
+                    <div>
+
+                        <x-input-label name="Rentang Waktu" />
+
+
+
+                        <x-dropdown name="waktu" id="waktu" :options="[
+                            'all' => 'Semua Waktu',
+                        
+                            'hari_ini' => 'Hari Ini',
+                        
+                            'kemarin' => 'Kemarin',
+                        
+                            'minggu_lalu' => '1 Minggu Terakhir',
+                        
+                            'bulan_ini' => 'Bulan Ini',
+                        
+                            'bulan_lalu' => '1 Bulan Terakhir',
+                        
+                            'custom' => 'Custom Tanggal',
+                        ]" :selected="$filter['waktu']"
+                            onchange="handleWaktuChange(this.value)" />
+
+                    </div>
+
+
+
+                    {{-- TOKO --}}
+
+                    <div>
+
+                        <x-input-label name="Toko / Cabang" />
+
+
+
+                        <x-dropdown name="toko" :options="['all' => 'Semua Toko'] + $tokos->pluck('name', 'id')->toArray()" :selected="$filter['toko']" />
+
+                    </div>
+
+
+
+                    {{-- KATEGORI --}}
+
+                    <div>
+
+                        <x-input-label name="Kategori" />
+
+
+
+                        <x-dropdown name="kategori" :options="['all' => 'Semua Kategori'] + $categories->pluck('name', 'id')->toArray()" :selected="$filter['kategori']" />
+
+                    </div>
+
+                    {{-- Filter Tipe --}}
+                    <div>
+                        <x-input-label name="Tipe Transaksi" />
+                        <x-dropdown name="tipe" :options="[
+                            'all' => 'Semua (Masuk & Keluar)',
+                            'masuk' => 'Hanya Uang Masuk',
+                            'keluar' => 'Hanya Uang Keluar',
+                        ]" :selected="$filter['tipe']" />
+                    </div>
+
+
+
+                    {{-- APPLY --}}
+
+                    <div class="flex items-end">
+
+                        <button type="submit"
+                            class="w-full py-2.5 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition">
+
+                            APPLY FILTER
+
+                        </button>
+
+                    </div>
+
+
+
                 </div>
 
-                <!-- Jenis Transaksi -->
-                <div>
-                    <x-input-label name="Jenis Transaksi" class="mb-1 text-sm" />
-                    <x-dropdown name="filterType" id="filterType" class="w-full" :options="[
-                        'all' => 'Semua',
-                        'masuk' => 'Uang Masuk',
-                        'keluar' => 'Uang Keluar',
-                    ]" />
+
+
+                {{-- CUSTOM DATE --}}
+
+                <div id="customDateSection"
+                    class="{{ $filter['waktu'] === 'custom' ? '' : 'hidden' }}
+
+                   grid grid-cols-2 gap-4 mt-4 p-4 bg-gray-50 dark:bg-gray-900 rounded-xl border-2 border-dashed border-gray-200">
+
+
+
+                    <div>
+
+                        <label class="block text-[10px] font-bold text-gray-400 uppercase">
+
+                            Dari Tanggal
+
+                        </label>
+
+                        <input type="date" name="start_date" value="{{ $filter['start_date'] }}"
+                            class="w-full rounded-lg border-gray-300 dark:bg-gray-700">
+
+                    </div>
+
+
+
+                    <div>
+
+                        <label class="block text-[10px] font-bold text-gray-400 uppercase">
+
+                            Sampai Tanggal
+
+                        </label>
+
+                        <input type="date" name="end_date" value="{{ $filter['end_date'] }}"
+                            class="w-full rounded-lg border-gray-300 dark:bg-gray-700">
+
+                    </div>
+
                 </div>
 
-                <!-- Toko -->
-                <div>
-                    <x-input-label name="Toko" class="mb-1 text-sm" />
-                    <x-dropdown name="filterToko" id="filterToko" class="w-full" :options="[
-                        'all' => 'Semua Toko',
-                        'Planet Fashion Bandung' => 'Planet Fashion Bandung',
-                        'Planet Fashion Jakarta' => 'Planet Fashion Jakarta',
-                        'Planet Fashion Bekasi' => 'Planet Fashion Bekasi',
-                    ]" />
-                </div>
 
-            </div>
+
+            </form>
+
         </div>
 
+        {{-- Tabel Data --}}
+        <div
+            class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm overflow-hidden border border-gray-200 dark:border-gray-700">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-gray-50 dark:bg-gray-700/50 border-b border-gray-200 dark:border-gray-700">
+                        <tr class="text-xs font-black text-gray-500 uppercase tracking-widest">
+                            <th class="p-5">Tanggal</th>
+                            <th class="p-5">Toko</th>
+                            <th class="p-5">Kategori</th>
+                            <th class="p-5">Sub Kategori</th>
+                            <th class="p-5 text-right">Masuk</th>
+                            <th class="p-5 text-right">Keluar</th>
+                            <th class="p-5 text-right">Saldo Akhir</th>
+                            <th class="p-5 text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                        @forelse($transaksi as $item)
+                            <tr class="hover:bg-gray-50/50 dark:hover:bg-gray-900/50 transition-colors">
+                                <td class="p-5 font-semibold">
+                                    {{ \Carbon\Carbon::parse($item->tanggal)->format('d/m/Y') }}
+                                </td>
+                                <td class="p-5">
+                                    <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-sm">
+                                        {{ $item->user->store->name ?? 'Pusat' }}
+                                    </span>
+                                </td>
+                                {{-- Ganti dari $item->kategori->name menjadi: --}}
+                                <td class="p-5">{{ $item->kategori_name }}</td>
 
-        <!-- TABLE -->
-        <x-table>
-            <thead>
-                <tr>
-                    <x-th class="w-16 text-center">No</x-th>
-                    <x-th>Tanggal</x-th>
-                    <x-th>Toko</x-th>
+                                {{-- Dan sub kategori: --}}
+                                <td class="p-5 ">{{ $item->sub_name }}</td>
 
-                    <!-- Desktop only -->
-                    <x-th class="hidden md:table-cell">Kode</x-th>
-                    <x-th class="hidden md:table-cell">Kategori</x-th>
-                    <x-th class="hidden md:table-cell">Sub Kategori</x-th>
-                    <x-th class="hidden md:table-cell">Transaksi</x-th>
-                    <x-th class="hidden md:table-cell">Saldo</x-th>
-                    <x-th class="hidden md:table-cell text-center">Action</x-th>
+                                {{-- Kolom Masuk --}}
+                                <td class="p-5 text-right font-bold text-green-600">
+                                    {{ $item->tipe == 'masuk' ? number_format($item->nominal, 0, ',', '.') : '-' }}
+                                </td>
 
-                </tr>
-            </thead>
+                                {{-- Kolom Keluar --}}
+                                <td class="p-5 text-right font-bold text-red-600">
+                                    {{ $item->tipe == 'keluar' ? number_format($item->nominal, 0, ',', '.') : '-' }}
+                                </td>
 
-            <x-tbody id="tableBody" />
-        </x-table>
+                                {{-- Running Saldo --}}
+                                <td class="p-5 text-right font-black text-gray-800 dark:text-gray-200">
+                                    {{ number_format($item->saldo_berjalan, 0, ',', '.') }}
+                                </td>
 
-        <!-- PAGINATION -->
-        <div class="flex justify-center">
-            <div id="pagination" class="flex items-center gap-1 bg-white dark:bg-gray-800 border rounded-lg p-1 shadow-sm">
+                                <td class="p-5 text-center">
+                                    <div class="flex items-center justify-center gap-2">
+                                        {{-- Tombol Detail --}}
+                                        <button onclick="toggleDetail('row-{{ $item->tipe }}-{{ $item->id }}')"
+                                            class="px-3 py-1 bg-gray-100 text-gray-600 rounded-md text-xs font-bold hover:bg-gray-200 transition uppercase">
+                                            Detail
+                                        </button>
+
+                                        {{-- Tombol Edit --}}
+                                        @php
+                                            $editRoute =
+                                                $item->tipe == 'masuk'
+                                                    ? route('forms.uang-masuk.edit', $item->id)
+                                                    : route('forms.uang-keluar.edit', $item->id);
+                                        @endphp
+
+                                        <a href="{{ $editRoute }}"
+                                            class="px-3 py-1 bg-blue-500 text-white rounded-md text-xs font-bold hover:bg-blue-600 transition uppercase">
+                                            Edit
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            {{-- Detail Row --}}
+                            <tr id="row-{{ $item->tipe }}-{{ $item->id }}"
+                                class="hidden bg-gray-50 dark:bg-gray-900/30">
+                                <td colspan="7" class="p-5 italic text-gray-500">
+                                    Keterangan: {{ $item->keterangan ?? 'Tidak ada catatan.' }} | Diinput oleh:
+                                    {{ $item->user->name ?? 'System' }}
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="7" class="p-10 text-center text-gray-400">Belum ada transaksi</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-
-    <script src="{{ asset('js/helpers/pagination.js') }}"></script>
-    <script>
-        const data = [];
-        let saldo = 2000000;
-        const perPage = 10;
-        let currentPage = 1;
-        let filteredData = [];
-
-        // ===== DUMMY DATA =====
-
-        const tokoList = [
-            'Planet Fashion Bandung',
-            'Planet Fashion Jakarta',
-            'Planet Fashion Bekasi'
-        ];
-
-        // Kategori untuk transaksi KELUAR
-        const kategoriKeluar = [{
-                nama: 'ATK',
-                sub: ['Solasi', 'Kertas', 'Pulpen', 'Tinta Printer']
-            },
-            {
-                nama: 'Makan & Minum',
-                sub: ['Air Mineral', 'Kopi', 'Snack', 'Makan Siang']
-            },
-            {
-                nama: 'Operasional',
-                sub: ['Listrik', 'Internet', 'Kebersihan']
-            }
-        ];
-
-        for (let i = 0; i < 30; i++) {
-            const date = new Date();
-            date.setDate(date.getDate() - i);
-
-            const toko = tokoList[i % tokoList.length];
-            const isMasuk = i % 3 === 0; // 1 masuk, 2 keluar (lebih realistis)
-
-            let masuk = 0;
-            let keluar = 0;
-            let kategori = '';
-            let subKategori = null;
-            let keterangan = '';
-
-            if (isMasuk) {
-                masuk = 1000000 + (Math.floor(Math.random() * 5) * 100000);
-                kategori = 'Dari Keuangan';
-                keterangan = 'Transfer dari bagian keuangan';
-            } else {
-                const kat = kategoriKeluar[i % kategoriKeluar.length];
-                const sub = kat.sub[i % kat.sub.length];
-
-                keluar = 50000 + (Math.floor(Math.random() * 10) * 25000);
-                kategori = kat.nama;
-                subKategori = sub;
-                keterangan = sub;
-            }
-
-            saldo = saldo + masuk - keluar;
-
-            data.push({
-                tanggal: date,
-                toko,
-                kode: `${1000 + i}`,
-                kategori,
-                subKategori,
-                keterangan,
-                masuk,
-                keluar,
-                saldo
-            });
-        }
-
-        // ===== FILTER =====
-        function applyFilter() {
-            const time = document.getElementById('filterTime').value;
-            const type = document.getElementById('filterType').value;
-            const toko = document.getElementById('filterToko').value;
-            const now = new Date();
-
-            filteredData = data.filter(row => {
-                if (time === 'today' && row.tanggal.toDateString() !== now.toDateString()) return false;
-                if (time === 'week' && Math.floor((now - row.tanggal) / 86400000) > 7) return false;
-                if (time === 'month' && Math.floor((now - row.tanggal) / 86400000) > 30) return false;
-
-                if (type === 'masuk' && row.masuk === 0) return false;
-                if (type === 'keluar' && row.keluar === 0) return false;
-
-                if (toko !== 'all' && row.toko !== toko) return false;
-
-                return true;
-            });
-
-            currentPage = 1;
-            renderTable();
-        }
-
-        document.getElementById('filterTime').addEventListener('change', applyFilter);
-        document.getElementById('filterType').addEventListener('change', applyFilter);
-        document.getElementById('filterToko').addEventListener('change', applyFilter);
-
-        // ===== RENDER TABLE =====
-        function renderTable() {
-            const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = '';
-
-            const start = (currentPage - 1) * perPage;
-            const pageData = filteredData.slice(start, start + perPage);
-
-            pageData.forEach((row, index) => {
-                const rowId = `row-${start + index}`;
-
-                tbody.innerHTML += `
-                <tr class="border-b hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <td class="p-3 flex items-center gap-2">
-                        <button 
-                            onclick="toggleDetail('${rowId}')" 
-                            class="toggle-btn md:hidden transition-transform duration-200"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                class="w-4 h-4 text-gray-600 dark:text-gray-300"
-                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 5l7 7-7 7" />
-                            </svg>
-                        </button>
-                        ${start + index + 1}
-                    </td>
-
-                    <td class="p-3">${row.tanggal.toLocaleDateString('id-ID')}</td>
-                    <td class="p-3">${row.toko}</td>
-
-                    <!-- Desktop -->
-                    <td class="p-3 hidden md:table-cell">${row.kode}</td>
-                    <td class="p-3 hidden md:table-cell">${row.kategori ?? '-'}</td>
-                    <td class="p-3 hidden md:table-cell">${row.subKategori ?? '-'}</td>
-                    <td class="p-3 hidden md:table-cell 
-                        ${row.masuk ? 'text-green-600' : 'text-red-600'}">
-                        ${row.masuk 
-                            ? '+' + row.masuk.toLocaleString('id-ID') 
-                            : '-' + row.keluar.toLocaleString('id-ID')}
-                    </td>
-                    <td class="p-3 hidden md:table-cell font-semibold">
-                        ${row.saldo.toLocaleString('id-ID')}
-                    </td>
-                    <td class="p-3 hidden md:table-cell text-center">
-                        <a href="${row.masuk 
-                            ? '{{ route('forms.uang-masuk.edit') }}' 
-                            : '{{ route('forms.uang-keluar.edit') }}'}"
-                        class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg
-                        bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium">
-                            Edit
-                        </a>
-                    </td>
-                </tr>
-                `;
-
-
-                tbody.innerHTML += `
-                <tr id="${rowId}" class="hidden bg-gray-50 dark:bg-gray-800">
-                    <td></td>
-                    <td colspan="7" class="p-3 space-y-1 text-lg">
-                        <div><strong>Kode:</strong> ${row.kode}</div>
-                        <div><strong>Kategori:</strong> ${row.kategori ?? '-'}</div>
-                        <div><strong>Sub Kategori:</strong> ${row.subKategori ?? '-'}</div>
-                        <div><strong>Keterangan:</strong> ${row.keterangan}</div>
-                        <div><strong>Transaksi:</strong>
-                            <span class="${row.masuk ? 'text-green-600' : 'text-red-600'}">
-                                ${row.masuk ? '+' : '-'}${(row.masuk || row.keluar).toLocaleString('id-ID')}
-                            </span>
-                        </div>
-                        <div><strong>Saldo:</strong> ${row.saldo.toLocaleString('id-ID')}</div>
-                        <div class="pt-2 mt-2 border-t flex w-full md:hidden">
-                            <a href="{row.masuk 
-                                ? '{{ route('forms.uang-masuk.edit') }}' 
-                                : '{{ route('forms.uang-keluar.edit') }}'}"
-                            class="inline-flex items-center justify-center px-4 py-2 rounded-lg
-                                    bg-blue-400 hover:bg-blue-500 text-white text-sm font-medium">
-                                Edit
-                            </a>
-                        </div>
-                    </td>
-                </tr>
-                `;
-            });
-
-            renderPagination({
-                containerId: 'pagination',
-                currentPage,
-                perPage,
-                totalData: filteredData.length,
-                onChange: changePage
-            });
-        }
-
-        // ===== CHANGE PAGE =====
-        window.changePage = function(page) {
-            const totalPages = Math.ceil(filteredData.length / perPage);
-            if (page < 1 || page > totalPages) return;
-            currentPage = page;
-            renderTable();
-        }
-
-        function toggleDetail(id) {
-            const detailRow = document.getElementById(id);
-            const btn = detailRow.previousElementSibling.querySelector('.toggle-btn');
-
-            if (detailRow.classList.contains('hidden')) {
-                detailRow.classList.remove('hidden');
-                btn.classList.add('rotate-90');
-            } else {
-                detailRow.classList.add('hidden');
-                btn.classList.remove('rotate-90');
-            }
-        }
-
-
-        // ===== INIT =====
-        filteredData = data;
-        renderTable();
-    </script>
 @endsection

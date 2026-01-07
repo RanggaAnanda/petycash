@@ -1,72 +1,48 @@
 @extends('layouts.app')
 
-@section('title', 'Form Omset')
-@section('page-title', 'Form Omset')
+@section('title', 'Edit Omset')
+@section('page-title', 'Edit Omset')
 
 @section('content')
-    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow w-full">
+    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
 
-        <form action="#" class="space-y-6">
+        <form action="{{ route('forms.omset.update', $item->id) }}" method="POST" class="space-y-6">
+            @csrf
+            @method('PUT')
 
-            <!-- Header -->
-            <div class="mb-6">
-                <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100 ">
-                    Form Omset
-                </h2>
-                <hr class="mt-3 border-gray-200 dark:border-gray-700">
+            <div>
+                <x-input-label name="Tanggal" />
+                <x-input-date name="tanggal" value="{{ $item->tanggal }}" />
             </div>
 
-            <!-- Tanggal -->
             <div>
-                <label class="block mb-1 text-lg font-medium text-gray-700 dark:text-gray-200">
-                    Tanggal
-                </label>
-                <x-input-date name="tanggal" readonly />
-
+                <x-input-label name="Toko" />
+                <x-dropdown name="store_id" :options="$tokos->pluck('name', 'id')->toArray()" :selected="$item->store_id" required />
             </div>
 
-            <!-- Toko -->
             <div>
-                <label class="block mb-1 text-lg font-medium text-gray-700 dark:text-gray-200">
-                    Toko
-                </label>
-                <select
-                    class="w-full rounded border border-gray-300 dark:border-gray-600
-                       bg-white dark:bg-gray-700
-                       text-gray-800 dark:text-gray-200
-                       text-lg p-2">
-                    <option>Pilih Toko</option>
-                    <option selected>Planet Fashihion Bandung</option>
-                    <option>Planet Fashihion Jakarta</option>
-                    <option>Planet Fashihion Surabaya</option>
-                </select>
-            </div>
-
-            <!-- Jumlah Omset -->
-            <div>
-                <label class="block mb-1 text-lg font-medium text-gray-700 dark:text-gray-200">
-                    Jumlah Omset
-                </label>
+                <x-input-label name="Jumlah Omset" />
                 <div class="flex">
-                    <input type="text" value="Rp" disabled
-                        class="w-16 rounded-l border border-gray-300 dark:border-gray-600
-                           bg-gray-100 dark:bg-gray-600
-                           text-gray-700 dark:text-gray-200
-                           p-2 text-lg text-center">
-                    <x-input-rp type="text" placeholder="Masukkan nominal" value="1.500.000"/>
+                    <x-input-rp-label value="Rp" type="text" />
+                    <x-input-rp name="nominal" value="{{ number_format($item->nominal, 0, ',', '.') }}" type="text"
+                        required />
+
                 </div>
             </div>
 
-            <!-- Save Button -->
-            <div class="pt-4">
-                <a href="{{ route('daftar.omset.index') }}">
-                    <button type="button"
-                        class="w-full md:w-auto
-                           bg-blue-600 hover:bg-blue-700
-                           dark:bg-blue-500 dark:hover:bg-blue-600
-                           text-white px-6 py-2 rounded-lg transition">
-                        Simpan
-                    </button>
+            <div>
+                <x-input-label name="Keterangan" />
+                <x-input-text name="keterangan" value="{{ $item->keterangan }}" />
+            </div>
+
+            <div class="my-5 flex gap-3">
+                <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg">
+                    UPDATE
+                </button>
+
+                <a href="{{ route('daftar.omset.index') }}"
+                    class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 rounded-lg">
+                    BATAL
                 </a>
             </div>
 

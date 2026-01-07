@@ -92,6 +92,7 @@
                 prefix="Laporan." :items="[
                     ['label' => 'Petty Cash', 'route' => 'laporan.petycash'],
                     ['label' => 'Omset', 'route' => 'laporan.omset'],
+                    ['label' => 'Akuntansi', 'route' => 'laporan.pettycash.buku-besar'],
                 ]" />
         </div>
     </nav>

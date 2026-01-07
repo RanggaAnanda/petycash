@@ -16,6 +16,11 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('role')->default('user');
+
+            // Hapus ->after('password'), cukup letakkan barisnya di bawah password
+            $table->foreignId('store_id')->nullable()->constrained('stores');
+
             $table->timestamps();
         });
     }
